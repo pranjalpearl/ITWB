@@ -15,7 +15,7 @@ const BookingForm = () => {
   return (
     <>
       <div
-        className="rt-banner-searchbox standard-search wow fade-in-bottom"
+        className="rt-banner-searchbox standard-search"
         data-wow-duration="1s"
         data-wow-delay="1s"
       >
@@ -174,7 +174,7 @@ const BookingForm = () => {
 
       {/* Tab Navigation Links */}
       <ul
-        className="nav serachnavs wow fade-in-bottom"
+        className="nav serachnavs "
         id="rtMultiTab"
         role="tablist"
         data-wow-duration="1.5s"
