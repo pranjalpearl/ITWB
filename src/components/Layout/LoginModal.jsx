@@ -21,6 +21,17 @@ const LoginModal = ({ isOpen, onClose }) => {
     },
   });
 
+  const signUpMutation = useMutation({
+    mutationFn: (payload) => authService.signup(payload),
+    onSuccess: (data) => {
+      toast.success("Sign up successful!");
+      setIsLoginView(true);
+    },
+    onError: (error) => {
+      toast.error(error?.response?.data?.message || "Sign up failed!");
+    },
+  });
+
   if (!isOpen) {
     return null;
   }
@@ -44,11 +55,24 @@ const LoginModal = ({ isOpen, onClose }) => {
     loginMutation.mutate(payload);
   };
 
+  const handleSignUpSubmit = (e) => {
+    e.preventDefault();
+    const payload = {
+      name: e.target.username.value,
+      email: e.target.email.value,
+      password: e.target.password.value,
+    };
+    signUpMutation.mutate(payload);
+  };
+
   return (
     <div
       className="modal fade show  backdrop-blur-sm"
       id="rtmodal-1"
-      onClick={onClose}
+      onClick={() => {
+        onClose()
+        setIsLoginView(true)
+      }}
       style={{
         display: "block",
         backgroundColor: "rgba(0, 0, 0, 0.5)",
@@ -67,12 +91,12 @@ const LoginModal = ({ isOpen, onClose }) => {
               <>
                 <div className="text-center mb-6">
                   <img
-                    src="/images/logo/Logo-icon.png"
+                    src="/images/logo/logo.png"
                     alt="modal logo"
-                    className="mx-auto h-48 w-48"
+                    className="mx-auto h-32 w-40"
                   />
                   <h4 className="text-2xl font-bold mt-4 text-gray-800">
-                    Login in to Emigrar
+                    Login in to Indi Tour
                   </h4>
                   <p className="text-gray-600 mt-2">
                     Log in to get in the moment updates on the things that
@@ -86,7 +110,7 @@ const LoginModal = ({ isOpen, onClose }) => {
                       name="email"
                       required
                       className="w-full border border-gray-300 rounded-full px-5 py-3 mb-4 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                      placeholder="User name"
+                      placeholder="User name or Email"
                     />
                     <input
                       type="password"
@@ -134,56 +158,53 @@ const LoginModal = ({ isOpen, onClose }) => {
               <>
                 <div className="text-center mb-6">
                   <img
-                    src="/images/logo/Logo-icon.png"
+                    src="/images/logo/logo.png"
                     alt="modal logo"
-                    className="mx-auto h-48 w-48"
+                    className="mx-auto h-32 w-40"
                   />
                   <h4 className="text-2xl font-bold mt-4 text-gray-800">
                     Create your Account
                   </h4>
                   <p className="text-gray-600 mt-2">
-                    Log in to get in the moment updates on the things that
+                    Sign up to get in the moment updates on the things that
                     interest you.
                   </p>
                 </div>
                 <div>
-                  <form>
+                  <form onSubmit={handleSignUpSubmit}>
                     <input
                       type="text"
+                      name="username"
+                      required
                       className="w-full border border-gray-300 rounded-full px-5 py-3 mb-4 focus:outline-none focus:ring-2 focus:ring-purple-500"
                       placeholder="User name"
                     />
                     <input
                       type="email"
+                      name="email"
+                      required
                       className="w-full border border-gray-300 rounded-full px-5 py-3 mb-4 focus:outline-none focus:ring-2 focus:ring-purple-500"
                       placeholder="Enter your mail address"
                     />
                     <input
                       type="password"
+                      name="password"
+                      required
                       className="w-full border border-gray-300 rounded-full px-5 py-3 mb-4 focus:outline-none focus:ring-2 focus:ring-purple-500"
                       placeholder="Password"
                     />
-                    <div className="space-y-4 my-4 text-lg">
-                      <div className="flex items-center px-2 gap-2">
-                        <input type="checkbox" />
-                        <label>
-                          I'd like to hear about promos, new products, and much
-                          more!
-                        </label>
-                      </div>
-                      <div className="flex items-center px-2 gap-2 ">
-                        <input type="checkbox" />
-                        <label>
-                          By clicking "Sign up" you agree to our Terms of
-                          Service and Privacy Policy
-                        </label>
-                      </div>
-                    </div>
+                   
                     <button
                       type="submit"
-                      className=" w-full  !rounded-full  text-white font-bold py-3 px-4  bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 cursor-pointer"
+                      disabled={signUpMutation.isPending}
+                      className={`w-full !rounded-full text-white font-bold py-3 px-4 bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 cursor-pointer transition duration-200 ease-in-out
+                        ${
+                          signUpMutation.isPending
+                            ? "opacity-70 cursor-not-allowed"
+                            : ""
+                        }`}
                     >
-                      Sign Up
+                      {signUpMutation.isPending ? "Signing up..." : "Sign Up"}
                     </button>
                   </form>
                   <div className="text-center mt-6">

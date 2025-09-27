@@ -1,18 +1,19 @@
 import { motion } from "framer-motion";
 import { MapPin, Clock, Star, Tag } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 
 const TourHeader = ({ tour }) => {
-  // Simulate last booked time (replace with actual backend data)
-  const [lastBooked, setLastBooked] = useState(12); // minutes ago
+  const { isAuthenticated } = useSelector((state) => state.auth);
+
+  const [lastBooked, setLastBooked] = useState(12);
 
   useEffect(() => {
-    // This could be replaced with real-time data from your backend
     const interval = setInterval(() => {
       setLastBooked((prev) =>
         prev > 0 ? prev - 1 : Math.floor(Math.random() * 60)
       );
-    }, 60000); // Update every minute
+    }, 60000);
     return () => clearInterval(interval);
   }, []);
 
@@ -23,7 +24,7 @@ const TourHeader = ({ tour }) => {
       transition={{ duration: 0.6 }}
       className=" p-8 rounded-2xl shadow-2xl border border-blue-200"
     >
-      {/* Header with Title, Last Booked Badge, and Rating */}
+      {}
       <div className="flex flex-col md:flex-row justify-between items-start mb-6">
         <div>
           <h1 className="text-4xl md:text-5xl font-extrabold text-blue-900 mb-2">
@@ -46,7 +47,7 @@ const TourHeader = ({ tour }) => {
         </div>
       </div>
 
-      {/* Tour Details Grid */}
+      {}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
         <div className="flex items-center space-x-3">
           <MapPin className="w-6 h-6 text-blue-600" />
@@ -75,21 +76,21 @@ const TourHeader = ({ tour }) => {
               {tour.isDiscount ? (
                 <>
                   <span className="line-through text-gray-500 mr-2">
-                    ${tour.original_price}
+                    ₹{tour.original_price}
                   </span>
                   <span className="text-green-600">
-                    ${tour.discounted_price} ({tour.discount_percent}% off)
+                    ₹{tour.discounted_price} ({tour.discount_percent}% off)
                   </span>
                 </>
               ) : (
-                <span>${tour.original_price}</span>
+                <span>₹{tour.original_price}</span>
               )}
             </p>
           </div>
         </div>
       </div>
 
-      {/* Highlights Section */}
+      {}
       <div className="mb-8">
         <h2 className="text-4xl font-semibold mb-3">Unique About This Tour</h2>
         <ul className="list-disc text-2xl pl-6 space-y-2 text-gray-700">
@@ -101,13 +102,13 @@ const TourHeader = ({ tour }) => {
         </ul>
       </div>
 
-      {/* Call to Action */}
-      <div className="w-full h-auto flex justify-center">
+      {}
+      <div className="w-full h-auto flex justify-end">
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className="w-full sm:w-auto bg-blue-600 text-white px-8 py-4 !rounded-full font-semibold hover:bg-blue-700 transition duration-300 shadow-lg"
-          style={{ fontSize: "20px" }} // 👈 Increase text size here
+          style={{ fontSize: "20px" }}
         >
           Book Now
         </motion.button>
