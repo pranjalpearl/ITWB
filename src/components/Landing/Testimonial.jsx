@@ -167,9 +167,9 @@ const Testimonial = () => {
                       data-position={`position-${index + 1}`}
                       onClick={() => handleTestimonialClick(index)} // Make the whole card clickable
                     >
-                      <div className="testi-thumb">
+                      <div className="testi-thumb cursor-pointer shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 mx-auto">
                         <div
-                          className="inner-bg"
+                          className="inner-bg "
                           style={{
                             backgroundImage: `url('${testimonial.image}')`,
                           }}

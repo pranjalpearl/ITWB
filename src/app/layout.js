@@ -17,10 +17,13 @@ import "@/styles/slick.css";
 import "@/styles/slider-range.css";
 import "@/styles/tippy.css";
 
+
 import Script from "next/script";
 
 import Navbar from "@/components/Layout/Navbar";
 import Footer from "@/components/Layout/Footer";
+import { AppProvider } from "@/provider/AppProvider";
+import { Toaster } from "react-hot-toast";
 
 export const metadata = {
   title: "Create Next App",
@@ -91,9 +94,45 @@ export default function RootLayout({ children }) {
       </head>
 
       <body>
-        <Navbar />
-        {children}
-        <Footer />
+        <AppProvider>
+          <Navbar />
+          {children}
+          <Footer />
+        </AppProvider>
+        <Toaster
+          position="top-right"
+          reverseOrder={false}
+          toastOptions={{
+            // Default style
+            style: {
+              background: "#333",
+              color: "#fff",
+              fontSize: "14px",
+              borderRadius: "8px",
+              padding: "12px 16px",
+            },
+            // Success style
+            success: {
+              style: {
+                background: "#16a34a", // green-600
+              },
+              iconTheme: {
+                primary: "#fff",
+                secondary: "#16a34a",
+              },
+            },
+            // Error style
+            error: {
+              style: {
+                background: "#dc2626", // red-600
+              },
+              iconTheme: {
+                primary: "#fff",
+                secondary: "#dc2626",
+              },
+            },
+          }}
+        />
       </body>
     </html>
   );

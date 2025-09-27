@@ -28,9 +28,7 @@ const BookingForm = () => {
             >
               <form action="#">
                 <div className="rt-radio-group">
-                    {/* Your radio buttons and dropdowns for Flights */}
-                    {/* Note: Dropdowns will also need state management to be fully functional in React */}
-                    <div className="custom-control custom-radio custom-control-inline">
+                    <div className="custom-control custom-radio custom-control-inline items-center">
                         <input type="radio" id="customRadioInline1" name="customRadioInline1" className="custom-control-input" />
                         <label className="custom-control-label" htmlFor="customRadioInline1">One-way</label>
                     </div>
@@ -42,27 +40,24 @@ const BookingForm = () => {
                         <input type="radio" id="customRadioInline3" name="customRadioInline3" className="custom-control-input" />
                         <label className="custom-control-label" htmlFor="customRadioInline3">Multi-city</label>
                     </div>
+                    
                 </div>
                 <div className="rt-input-group">
                   <div className="single-input  col-rt-in-3">
-                    <select className="rt-selectactive banner-select" name="from" style={{ width: "100%" }}>
+                    <select className="rt-selectactive banner-select form-control" name="from" style={{ width: "100%" }}>
                       <option value="1">from</option>
                       <option value="2">Alaska</option>
                       <option value="3">Bahamas</option>
                     </select>
-                    <span className="input-iconbadge">
-                      <img src="/images/icons-image/s_icon_1.png" alt="" draggable="false"/>
-                    </span>
+                    
                   </div>
                   <div className="single-input  col-rt-in-3">
-                    <select className="rt-selectactive banner-select" name="to" style={{ width: "100%" }}>
+                    <select className="rt-selectactive banner-select form-control" name="to" style={{ width: "100%" }}>
                       <option value="1">To</option>
                       <option value="2">Canada</option>
                       <option value="3">Caribbean</option>
                     </select>
-                    <span className="input-iconbadge">
-                      <img src="/images/icons-image/s_icon_2.png" alt="" draggable="false"/>
-                    </span>
+                   
                   </div>
                   <div className="single-input  col-rt-in-3">
                     <input type="text" className="form-control rt-date-picker has-icon" placeholder="Depart"/>
@@ -143,13 +138,13 @@ const BookingForm = () => {
               <form action="#">
                 <div className="rt-input-group">
                   <div className="single-input col-rt-in-3">
-                     <select className="rt-selectactive banner-select" name="from" style={{ width: "100%" }}>
+                     <select className="rt-selectactive banner-select form-control" name="from" style={{ width: "100%" }}>
                        <option value="1">from</option>
                        <option value="2">New York</option>
                      </select>
                   </div>
                   <div className="single-input col-rt-in-3">
-                     <select className="rt-selectactive banner-select" name="to" style={{ width: "100%" }}>
+                     <select className="rt-selectactive banner-select form-control" name="to" style={{ width: "100%" }}>
                        <option value="1">To</option>
                        <option value="2">Boston</option>
                      </select>
