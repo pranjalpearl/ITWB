@@ -1,124 +1,17 @@
-import React from "react";
-
+"use client";
+import { useSelector } from "react-redux";
+import { useParams } from "next/navigation";
 const CSR = () => {
+  const params = useParams();
+  const { id } = params;
+  const tours = useSelector((state) => state.tours.tours);
+  const tour = tours.find((t) => t.id === Number(id));
   return (
     <div>
       <section className="content-area">
         <div className="container">
           <div className="row">
-            <div className="col-lg-7">
-              <div className="rt-duel-slider-main rt-mb-30">
-                <div
-                  className="single-main rtbgprefix-cover"
-                  style={{
-                    backgroundImage: "url('images/all-img/trip-bg-1.jpg')",
-                  }}
-                >
-                  <div className="inner-badge badge-bg-1 f-size-14 rt-strong">
-                    Last booked 12 mins ago
-                  </div>
-                </div>
-                <div
-                  className="single-main rtbgprefix-cover"
-                  style={{
-                    backgroundImage:
-                      "url('/images/all-img/hotel-slider-2.jpg')",
-                  }}
-                >
-                  <div className="inner-badge badge-bg-1 f-size-14 rt-strong">
-                    Last booked 12 mins ago
-                  </div>
-                </div>
-                <div
-                  className="single-main rtbgprefix-cover"
-                  style={{
-                    backgroundImage:
-                      "url('/images/all-img/hotel-slider-3.jpg')",
-                  }}
-                >
-                  <div className="inner-badge badge-bg-1 f-size-14 rt-strong">
-                    Last booked 12 mins ago
-                  </div>
-                </div>
-                <div
-                  className="single-main rtbgprefix-cover"
-                  style={{
-                    backgroundImage:
-                      "url('/images/all-img/hotel-slider-4.jpg')",
-                  }}
-                >
-                  <div className="inner-badge badge-bg-1 f-size-14 rt-strong">
-                    Last booked 12 mins ago
-                  </div>
-                </div>
-                <div
-                  className="single-main rtbgprefix-cover"
-                  style={{
-                    backgroundImage:
-                      "url('/images/all-img/hotel-slider-5.jpg')",
-                  }}
-                >
-                  <div className="inner-badge badge-bg-1 f-size-14 rt-strong">
-                    Last booked 12 mins ago
-                  </div>
-                </div>
-                <div
-                  className="single-main rtbgprefix-cover"
-                  style={{
-                    backgroundImage:
-                      "url('/images/all-img/hotel-slider-6.jpg')",
-                  }}
-                >
-                  <div className="inner-badge badge-bg-1 f-size-14 rt-strong">
-                    Last booked 12 mins ago
-                  </div>
-                </div>
-              </div>
-              <div className="rt-duel-slider-thumb">
-                <div
-                  className="single--thumb rtbgprefix-cover"
-                  style={{
-                    backgroundImage: "url('/images/all-img/trip-bg-1.jpg')",
-                  }}
-                ></div>
-
-                <div
-                  className="single--thumb rtbgprefix-cover"
-                  style={{
-                    backgroundImage:
-                      "url('/images/all-img/hotel-slider-2.jpg')",
-                  }}
-                ></div>
-
-                <div
-                  className="single--thumb rtbgprefix-cover"
-                  style={{
-                    backgroundImage: "url('/images/all-img/hotel-slider-3.jpg)",
-                  }}
-                ></div>
-
-                <div
-                  className="single--thumb rtbgprefix-cover"
-                  style={{
-                    backgroundImage: "url('/images/all-img/hotel-slider-4.jpg)",
-                  }}
-                ></div>
-
-                <div
-                  className="single--thumb rtbgprefix-cover"
-                  style={{
-                    backgroundImage: "url('/images/all-img/hotel-slider-3.jpg)",
-                  }}
-                ></div>
-
-                <div
-                  className="single--thumb rtbgprefix-cover"
-                  style={{
-                    backgroundImage: "url('/images/all-img/hotel-slider-3.jpg)",
-                  }}
-                ></div>
-              </div>
-            </div>
+            <div className="col-lg-7 bg-amber-300"></div>
             <div className="col-lg-5 mt-5 mt-lg-0">
               <div className="hotel-inner-content">
                 <h5 className="f-size-18 rt-medium">
