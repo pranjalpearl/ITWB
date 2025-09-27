@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 const dealData = [
   {
     id: 1,
-    bgImage: "/images/all-img/deal-bg.jpg",
+    bgImage: "/images/tour/t1.jpg",
     title: "14 Day Classic Tour of Thailand & Beaches",
     promoText:
       "Grab a promo code for extra savings up to 75% on discounted hotels!",
@@ -21,7 +21,7 @@ const dealData = [
   },
   {
     id: 2,
-    bgImage: "/images/all-img/deal-bg.jpg",
+    bgImage: "/images/tour/t2.jpg",
     title: "10 Day Cultural Journey Through Japan",
     promoText:
       "Book now and receive a complimentary pass to the Tokyo Skytree!",
@@ -36,7 +36,7 @@ const dealData = [
   },
   {
     id: 3,
-    bgImage: "/images/all-img/deal-bg.jpg",
+    bgImage: "/images/tour/t3.jpg",
     title: "7 Day Adventure in the Swiss Alps",
     promoText: "Early bird special: Get 20% off all summer adventure packages!",
     mainHeading: "Explore The Swiss Alps",
@@ -67,8 +67,8 @@ const DealSlide = ({ deal }) => {
             style={{ backgroundImage: `url('${deal.bgImage}')` }}
           >
             <div className="absolute bottom-0 left-1/2 w-[90%] -translate-x-1/2 text-black text-center bg-opacity-75 p-4">
-              <p>{deal.title}</p>
-              <p>{deal.promoText}</p>
+              <p className="bg-neutral-300/70 text-white rounded-2xl">{deal.title}</p>
+         
             </div>
           </div>
         </div>

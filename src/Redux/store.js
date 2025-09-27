@@ -4,7 +4,7 @@ import storage from "@/utils/storage";
 import { setStore } from "@/utils/axiosInstance";
 
 import authReducer from "./feature/auth/authSlice";
-
+import tourReducer from "./feature/tours/tourSlice";
 
 const authPersistConfig = {
   key: "auth",
@@ -17,6 +17,7 @@ const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
 export const store = configureStore({
   reducer: {
     auth: persistedAuthReducer,
+    tours: tourReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

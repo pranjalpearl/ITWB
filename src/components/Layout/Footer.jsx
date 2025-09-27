@@ -1,20 +1,16 @@
 "use client";
 import React, { useEffect } from "react";
 
-
 const Footer = () => {
   useEffect(() => {
-    // Check if the window object is defined, which is true only in the browser
-    if (typeof window !== 'undefined') {
-      // Dynamically import the WOW.js library
-      const WOW = require('wowjs');
-      // Initialize WOW.js
+    if (typeof window !== "undefined") {
+      const WOW = require("wowjs");
+
       new WOW.WOW({
         live: false,
       }).init();
     }
   }, []);
-
 
   return (
     <section className="rt-site-footer" data-scrollax-parent="true">
@@ -72,7 +68,7 @@ const Footer = () => {
 
         <div className="container">
           <div className="row">
-            {/* Column 1 */}
+            {}
             <div className="col-lg-3 col-md-6">
               <div
                 className="rt-single-widget wow fade-in-bottom"
@@ -102,7 +98,7 @@ const Footer = () => {
               </div>
             </div>
 
-            {/* Column 2 */}
+            {}
             <div className="col-lg-3 col-md-6">
               <div
                 className="rt-single-widget wow fade-in-bottom"
@@ -135,7 +131,7 @@ const Footer = () => {
               </div>
             </div>
 
-            {/* Column 3 */}
+            {}
             <div className="col-lg-3 col-md-6">
               <div
                 className="rt-single-widget wow fade-in-bottom"
@@ -162,7 +158,7 @@ const Footer = () => {
               </div>
             </div>
 
-            {/* Column 4 */}
+            {}
             <div className="col-lg-3 col-md-6">
               <div
                 className="rt-single-widget wow fade-in-bottom"
@@ -195,7 +191,7 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Footer Bottom */}
+      {}
       <div className="footer-bottom">
         <div className="container">
           <div className="row">
@@ -204,7 +200,10 @@ const Footer = () => {
                 className="copy-text wow fade-in-bottom"
                 data-wow-duration="1s"
               >
-                Copyright © 2018. All Rights Reserved By <a href="#">Emigrar</a>
+                <p>
+                  Copyright © {new Date().getFullYear()}. All Rights Reserved By{" "}
+                  <a href="#">IndiTour</a>
+                </p>
               </div>
             </div>
             <div className="col-lg-6 text-center text-lg-right">
@@ -212,7 +211,7 @@ const Footer = () => {
                 className="rt-footer-social wow fade-in-bottom"
                 data-wow-duration="1.5s"
               >
-                <ul>
+                {/* <ul>
                   <li>
                     <a href="#">
                       <img
@@ -258,7 +257,7 @@ const Footer = () => {
                       />
                     </a>
                   </li>
-                </ul>
+                </ul> */}
               </div>
             </div>
           </div>

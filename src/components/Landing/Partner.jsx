@@ -26,11 +26,12 @@ const Partner = () => {
             <div className="col-lg-9 mx-auto">
               <ul className="rt-border-brands">
                 <li className="single-border-brands">
-                  <a href="#" className="wow flipInX d-block">
+                  <a href="#" className="wow flipInX d-block ">
                     <img
-                      src="/images/brands/brands-1.png"
+                      src="/images/brand/b1.png"
                       alt="brands image"
                       draggable="false"
+                      className="h-30 w-48"
                     />
                   </a>
                 </li>
@@ -41,9 +42,10 @@ const Partner = () => {
                     data-wow-duration="1s"
                   >
                     <img
-                      src="/images/brands/brands-2.png"
+                      src="/images/brand/b2.png"
                       alt="brands image"
                       draggable="false"
+                      className="h-30 w-48 mx-auto my-auto"
                     />
                   </a>
                 </li>
@@ -54,9 +56,10 @@ const Partner = () => {
                     data-wow-duration="1.5s"
                   >
                     <img
-                      src="/images/brands/brands-3.png"
+                      src="/images/brand/b3.jpg"
                       alt="brands image"
                       draggable="false"
+                      className="h-30 w-48 mx-auto my-auto"
                     />
                   </a>
                 </li>
@@ -67,9 +70,10 @@ const Partner = () => {
                     data-wow-duration="2s"
                   >
                     <img
-                      src="/images/brands/brands-4.png"
+                      src="/images/brand/b4.png"
                       alt="brands image"
                       draggable="false"
+                      className="h-24 w-48 mx-auto my-auto"
                     />
                   </a>
                 </li>
@@ -80,9 +84,10 @@ const Partner = () => {
                     data-wow-duration="2.5s"
                   >
                     <img
-                      src="/images/brands/brands-4.png"
+                      src="/images/brand/b5.png"
                       alt="brands image"
                       draggable="false"
+                      className="h-30 w-48 mx-auto my-auto"
                     />
                   </a>
                 </li>
@@ -93,9 +98,10 @@ const Partner = () => {
                     data-wow-duration="3s"
                   >
                     <img
-                      src="/images/brands/brands-3.png"
+                      src="/images/brand/b6.png"
                       alt="brands image"
                       draggable="false"
+                      className="h-30 w-48 mx-auto my-auto"
                     />
                   </a>
                 </li>
@@ -106,9 +112,10 @@ const Partner = () => {
                     data-wow-duration="3.5s"
                   >
                     <img
-                      src="/images/brands/brands-2.png"
+                      src="/images/brand/b1.png"
                       alt="brands image"
                       draggable="false"
+                      className="h-30 w-48 mx-auto my-auto"
                     />
                   </a>
                 </li>
@@ -119,9 +126,10 @@ const Partner = () => {
                     data-wow-duration="4s"
                   >
                     <img
-                      src="/images/brands/brands-1.png"
+                      src="/images/brand/b2.png"
                       alt="brands image"
                       draggable="false"
+                      className="h-30 w-48 mx-auto my-auto"
                     />
                   </a>
                 </li>

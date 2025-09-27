@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import authService from "@/Redux/feature/auth/authService";
 import { useMutation } from "@tanstack/react-query";
-import { useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import { setUser } from "@/Redux/feature/auth/authSlice";
 
 const LoginModal = ({ isOpen, onClose }) => {
@@ -12,7 +12,7 @@ const LoginModal = ({ isOpen, onClose }) => {
   const loginMutation = useMutation({
     mutationFn: (payload) => authService.login(payload),
     onSuccess: (data) => {
-       dispatch(setUser(data))
+      dispatch(setUser(data));
       toast.success("Login successful!");
       onClose();
     },
@@ -107,7 +107,11 @@ const LoginModal = ({ isOpen, onClose }) => {
                         hover:from-purple-700 hover:to-blue-600 
                         cursor-pointer 
                         transition duration-200 ease-in-out
-                        ${loginMutation.isPending ? "opacity-70 cursor-not-allowed" : ""}`}
+                        ${
+                          loginMutation.isPending
+                            ? "opacity-70 cursor-not-allowed"
+                            : ""
+                        }`}
                     >
                       {loginMutation.isPending ? "Logging in..." : "Log In"}
                     </button>
