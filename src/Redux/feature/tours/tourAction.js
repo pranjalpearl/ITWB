@@ -1,8 +1,7 @@
 import instance from "@/utils/axiosInstance";
 
 class TourService {
-  
-    async fetchTours() {
+  async fetchTours() {
     try {
       const { data } = await instance.get(`/tours?limit=20`);
       return data.data;
@@ -11,6 +10,14 @@ class TourService {
     }
   }
 
+  async fetchHotSellingTour() {
+    try {
+      const { data } = await instance.get("/tours/?is_hot_selling=true");
+      return data.data;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 const tourService = new TourService();

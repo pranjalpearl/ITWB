@@ -58,7 +58,7 @@ const Navbar = () => {
                           !isHome ? "text-white" : ""
                         } `}
                       ></i>
-                      info@emigrar.com
+                      info@inditour.com
                     </a>
                   </li>
                 </ul>

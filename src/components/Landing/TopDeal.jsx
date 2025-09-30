@@ -149,7 +149,7 @@ const TopDeal = () => {
           </AnimatePresence>
         </div>
 
-        <div className="absolute bottom-8 left-1/3  flex -translate-x-1/2 gap-8 top-[307%]">
+        <div className="absolute bottom-8 left-1/3  flex -translate-x-1/2 gap-8 top-[407%]">
           {}
           <button
             onClick={goToPrevious}

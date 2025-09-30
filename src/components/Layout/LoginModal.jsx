@@ -5,9 +5,9 @@ import { useMutation } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
 import { setUser } from "@/Redux/feature/auth/authSlice";
 
-const LoginModal = ({ isOpen, onClose }) => {
+const LoginModal = ({ isOpen, onClose, defaultLoginView = true }) => {
   const dispatch = useDispatch();
-  const [isLoginView, setIsLoginView] = useState(true);
+   const [isLoginView, setIsLoginView] = useState(defaultLoginView);
 
   const loginMutation = useMutation({
     mutationFn: (payload) => authService.login(payload),

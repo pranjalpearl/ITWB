@@ -4,6 +4,7 @@ import GettingStarted from "@/components/Landing/GettingStarted";
 import Globe from "@/components/Landing/Globe";
 import Hero from "@/components/Landing/Hero";
 import Hotels from "@/components/Landing/Hotels";
+import HotSelling from "@/components/Landing/HotSelling";
 import Partner from "@/components/Landing/Partner";
 import Service from "@/components/Landing/Service";
 import Testimonial from "@/components/Landing/Testimonial";
@@ -16,6 +17,7 @@ const page = () => {
     <Hero/>
     <CounterCard/>
     <Service/>
+    <HotSelling/>
     <DealsSection/>
     <GettingStarted/>
     <Hotels/>
