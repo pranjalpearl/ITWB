@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import {  useState } from "react";
+import { useState } from "react";
 import LoginModal from "./LoginModal";
 import { useSelector } from "react-redux";
 import authService from "@/Redux/feature/auth/authService";
@@ -37,7 +37,7 @@ const Navbar = () => {
       <header className="rt-site-header  rt-fixed-top white-menu ">
         <div className="top-header d-none d-md-block ">
           <div className="container">
-            <div className="row align-items-cente">
+            <div className="flex justify-between items-center -mt-4">
               <div className="col-md-6">
                 <ul className="text-center text-md-left top-message text-white cursor-pointer">
                   <li style={!isHome ? { color: "white" } : {}}>
@@ -84,11 +84,7 @@ const Navbar = () => {
                       </a>
                     </div>
                   </li>
-                  <li>
-                    <a href="#">
-                      <i className="fas fa-briefcase"></i>My Trips
-                    </a>
-                  </li>
+
                   <li>
                     {isAuthenticated ? (
                       <div className="relative">
@@ -175,6 +171,17 @@ const Navbar = () => {
                       </a>
                     )}
                   </li>
+
+                  <span className="d-lg-inline">
+                    <li>
+                      <a
+                        href="/contact-us"
+                        className="rt-gradient2 inline-block px-6 py-3 !rounded-full text-white font-bold uppercase shadow-lg  hover:scale-105 transition-transform duration-300"
+                      >
+                        Contact Us
+                      </a>
+                    </li>
+                  </span>
                 </ul>
               </div>
             </div>
@@ -224,134 +231,55 @@ const Navbar = () => {
                     <li onClick={() => router.push("/trip")}>
                       <a className="cursor-pointer">Trip package</a>
                     </li>
+                    <li onClick={() => router.push("/trip")}>
+                      <a className="cursor-pointer">Pocket Trip</a>
+                    </li>
                     <li>
                       <a href="service-1.html">Services</a>
                     </li>
-                    <li className="menu-item-has-children">
-                      <a href="#">Pages</a>
-                      <ul className="sub-menu">
-                        <li className="menu-item-has-children">
-                          <a href="#">Home Pages</a>
-                          <ul className="sub-menu">
-                            <li>
-                              <a href="index.html">Home One</a>
-                            </li>
-                            <li>
-                              <a href="index-02.html">Home Two</a>
-                            </li>
-                          </ul>
-                        </li>
-                        <li className="menu-item-has-children">
-                          <a href="#">Hotel Pages</a>
-                          <ul className="sub-menu">
-                            <li>
-                              <a href="hotel-1.html">Hotel One</a>
-                            </li>
-                            <li>
-                              <a href="hotel-2.html">Hotel Two</a>
-                            </li>
-                            <li>
-                              <a href="hotel-3.html">Hotel Three</a>
-                            </li>
-                          </ul>
-                        </li>
-                        <li className="menu-item-has-children">
-                          <a href="#">Flight Pages</a>
-                          <ul className="sub-menu">
-                            <li>
-                              <a href="flight-1.html">Flight One</a>
-                            </li>
-                            <li>
-                              <a href="flight-details.html">Flight Two</a>
-                            </li>
-                          </ul>
-                        </li>
-                        <li className="menu-item-has-children">
-                          <a href="#">train Pages</a>
-                          <ul className="sub-menu">
-                            <li>
-                              <a href="train-1.html">train One</a>
-                            </li>
-                            <li>
-                              <a href="train-2.html">train Two</a>
-                            </li>
-                          </ul>
-                        </li>
-                        <li className="menu-item-has-children">
-                          <a href="#">trip Pages</a>
-                          <ul className="sub-menu">
-                            <li>
-                              <a href="trip-1.html">trip One</a>
-                            </li>
-                            <li>
-                              <a href="trip-2.html">trip Two</a>
-                            </li>
-                            <li>
-                              <a href="trip-3.html">trip Three</a>
-                            </li>
-                          </ul>
-                        </li>
-                        <li className="menu-item-has-children">
-                          <a href="#">car Pages</a>
-                          <ul className="sub-menu">
-                            <li>
-                              <a href="car-1.html">car One</a>
-                            </li>
-                            <li>
-                              <a href="car-2.html">car Two</a>
-                            </li>
-                          </ul>
-                        </li>
-                        <li className="menu-item-has-children">
-                          <a href="#">blog Pages</a>
-                          <ul className="sub-menu">
-                            <li>
-                              <a href="blog.html">blog</a>
-                            </li>
-                            <li>
-                              <a href="blog-grid.html">blog-grid</a>
-                            </li>
-                            <li>
-                              <a href="single-blog.html">blog-single 1</a>
-                            </li>
-                            <li>
-                              <a href="singleblog-lsidebar.html">
-                                blog-single 2
-                              </a>
-                            </li>
-                          </ul>
-                        </li>
-                        <li className="menu-item-has-children">
-                          <a href="#">Others Pages</a>
-                          <ul className="sub-menu">
-                            <li>
-                              <a href="about.html">About</a>
-                            </li>
-                            <li>
-                              <a href="service-1.html">service</a>
-                            </li>
-                            <li>
-                              <a href="afflite.html">afflite</a>
-                            </li>
-                            <li>
-                              <a href="help.html">help</a>
-                            </li>
-                            <li>
-                              <a href="how-work.html">how-work</a>
-                            </li>
-                            <li>
-                              <a href="contact.html">contact</a>
-                            </li>
-                            <li>
-                              <a href="404.html">404</a>
-                            </li>
-                          </ul>
-                        </li>
-                      </ul>
+                    <li>
+                      <a href="">About</a>
                     </li>
                     <li>
                       <a href="blog.html">Blog</a>
                     </li>
+                    <li>
+                    <form className="form-inline">
+                      <input
+                        className="form-control mr-sm-2 header_search d-none d-md-inline-block !rounded-2xl" 
+                        style={{
+                          height:"35px",
+                          width:"160px",
+                          fontSize:"16px"
+                        }}
+                        placeholder="Search..."
+                        aria-label="Search"
+                        type="search"
+                      />
+                      <button
+                      style={{
+                          height:"35px",
+                          width:"80px",
+                          fontSize:"14px",
+                          color: "white", fontWeight: "bold"
+                        }}
+                        className="btn rt-btn rt-gradient2 rt-rounded text-uppercase rt-Bshadow-1 searchBtn_desk d-md-inline-block d-none"
+                        type="submit"
+                      >
+                        Search
+                      </button>
+                      <button
+                        type="button"
+                        id="toggleSearch"
+                        className="mobile_searchBtn d-md-none"
+                      >
+                        <i className="fa-solid fa-magnifying-glass"></i>
+                      </button>
+                    </form>
+                    </li>
+
+                    
+                    
                   </ul>
                   <div className="mobile-menu">
                     <div className="menu-click">
@@ -361,7 +289,7 @@ const Navbar = () => {
                     </div>
                   </div>
                 </div>
-                <div className="rt-nav-tolls d-flex align-items-center">
+                {/* <div className="rt-nav-tolls d-flex align-items-center">
                   <span className="d-md-inline d-none">
                     <a
                       href="contact.html"
@@ -370,7 +298,7 @@ const Navbar = () => {
                       Contact Us
                     </a>
                   </span>
-                </div>
+                </div> */}
               </div>
             </div>
           </nav>
