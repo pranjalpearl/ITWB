@@ -3,7 +3,7 @@ import instance from "@/utils/axiosInstance";
 class TourService {
   async fetchTours() {
     try {
-      const { data } = await instance.get(`/tours?limit=20`);
+      const { data } = await instance.get(`/website-tour/get-tours`);
       return data.data;
     } catch (error) {
       throw error;
