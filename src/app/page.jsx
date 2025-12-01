@@ -1,3 +1,4 @@
+import BestSelling from "@/components/Landing/BestSelling";
 import CounterCard from "@/components/Landing/CounterCard";
 import CTA from "@/components/Landing/CTA";
 import GettingStarted from "@/components/Landing/GettingStarted";
@@ -14,18 +15,19 @@ import Video from "@/components/Landing/Video";
 const page = () => {
   return (
     <>
-    <Hero/>
-    <CounterCard/>
-    <Service/>
-    <HotSelling/>
-    <DealsSection/>
-    <GettingStarted/>
-    <Hotels/>
-    <Globe/>
-    <CTA/>
-    <Video/>
-    <Testimonial/>
-    <Partner/>
+      <Hero />
+      <CounterCard />
+      {/* <Service/> */}
+      <HotSelling />
+      <BestSelling />
+      <DealsSection />
+      <GettingStarted />
+      <Hotels />
+      <Globe />
+      <CTA />
+      <Video />
+      <Testimonial />
+      <Partner />
     </>
   );
 };

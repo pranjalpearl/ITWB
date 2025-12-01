@@ -55,9 +55,9 @@ const Service = () => {
         <div className="row">
           <div className="col-lg-8 text-center mx-auto">
             <div className="rt-section-title-wrapper mb-12">
+              <p className=" text-blue-600 font-bold text-lg">WHY Choose Our Travel Agency?    </p>
               <h2 className="rt-section-title text-4xl font-bold">
-                Hot Selling Tours
-              </h2>
+                Our Hot Selling Tours              </h2>
               <p className="text-gray-600 mt-4 max-w-2xl mx-auto">
                 From the moment you connect with us until you return home with
                 cherished memories, our dedicated team takes care of every
@@ -109,7 +109,7 @@ const Service = () => {
                       />
                     </a>
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                   <div className="absolute bottom-0 p-8 w-full">
+                    <div className="absolute bottom-0 p-8 w-full">
                       <a href={`/tour/detail/${tour.tour_slug}`}>
                         <h5 className="!text-4xl font-extrabold text-white tracking-tight truncate">
                           {tour.tour_name}
