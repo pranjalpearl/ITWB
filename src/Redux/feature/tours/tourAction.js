@@ -12,8 +12,30 @@ class TourService {
 
   async fetchHotSellingTour() {
     try {
-      const { data } = await instance.get("/tours/?is_hot_selling=true");
+      const { data } = await instance.get(
+        "/website-tour/get-tours/?isHotSelling=true"
+      );
       return data.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async fetchBestSellingTour() {
+    try {
+      const { data } = await instance.get(
+        "/website-tour/get-tours/?isQuickEscape=true"
+      );
+      return data.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async fetchTourById(id) {
+    try {
+      const { data } = await instance.get(`/website-tour/get-tour-by-id/${id}`);
+      return data;
     } catch (error) {
       throw error;
     }
