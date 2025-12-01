@@ -8,14 +8,37 @@ import TourImageSlider from "@/components/TripDetails/TourImageSlider";
 import TourHighlights from "@/components/TripDetails/TourHighlights";
 import TourItinerary from "@/components/TripDetails/TourItinerary";
 import TourListSection from "@/components/TripDetails/TourListSection";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import ToursService from "@/Redux/feature/tours/tourAction";
+import { useMutation } from "@tanstack/react-query";
 
 const TourDetails = () => {
   const { id } = useParams();
   const tours = useSelector((state) => state.tours.tours);
   const tour = tours?.find((t) => t.id == id);
 
-  if (!tour) {
+  const [tourData, setToursDataById] = useState(null)
+  const tourID = "8d90660e-b215-422b-a691-1c0507404b21"
+
+  const { mutate, isPending, isError, error } = useMutation({
+    mutationFn: () => ToursService.fetchTourById(tourID),
+    onSuccess: (data) => {
+      // Access the 'tours' array from the response object
+      setToursDataById(data.tours || []);
+      console.log(tourData, "tours data set");
+    },
+    onError: (error) => {
+      console.error("Failed to fetch tours:", error);
+    },
+  });
+
+  useEffect(() => {
+    mutate();
+  }, [])
+
+  // const us
+
+  if (!tourData) {
     return (
       <div className="flex justify-center items-center h-screen text-blue-600">
         Loading...
@@ -60,7 +83,7 @@ const TourDetails = () => {
       />
 
       <div className="min-h-screen w-full">
-        {}
+        { }
         <motion.section
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
@@ -73,7 +96,7 @@ const TourDetails = () => {
           </div>
         </motion.section>
 
-        {}
+        { }
         <motion.section
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -94,13 +117,12 @@ const TourDetails = () => {
                 key={tab}
                 onClick={() => setActiveTab(tab)}
                 style={{
-                  fontSize:"16px"
+                  fontSize: "16px"
                 }}
-                className={`px-6 py-4 !rounded-full font-medium transition-all duration-300 ${
-                  activeTab === tab
-                    ? "bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-lg"
-                    : "text-gray-600 hover:bg-gray-100"
-                }`}
+                className={`px-6 py-4 !rounded-full font-medium transition-all duration-300 ${activeTab === tab
+                  ? "bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-lg"
+                  : "text-gray-600 hover:bg-gray-100"
+                  }`}
               >
                 {tab
                   .split("-")
@@ -111,7 +133,7 @@ const TourDetails = () => {
           </div>
         </motion.section>
 
-        {}
+        { }
         <motion.section
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
