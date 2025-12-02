@@ -191,7 +191,7 @@ const TourDetails = () => {
       // FIX: Based on your JSON structure, the path is response.data.tour
       if (response?.data?.tour) {
         setTourData(response.data.tour);
-        cons
+        cons;
       } else {
         console.error("Structure mismatch:", response);
       }
@@ -355,23 +355,25 @@ const TourDetails = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="px-4 md:px-20 py-6 mt-4"
         >
-          <div className="text-2xl bg-white p-3 rounded-2xl shadow-md border border-blue-200 flex flex-wrap gap-20 justify-center items-center">
+          <div
+            className="mx-50 text-2xl bg-white p-3 rounded-2xl shadow-md flex flex-wrap gap-20 justify-center items-center
+             border-1 border-transparent hover:border-blue-500 transition-all duration-300"
+          >
             {[
               "tour-highlights",
               "itinerary",
               "inclusions",
               "exclusions",
-              // "accommodation",
               "transport",
               "notice",
             ].map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`px-6 py-4 rounded-full transition-all duration-300 text-xl md:text-2xl text-center ${
+                className={`px-3 py-3 !rounded-full transition-all duration-300 text-lg md:text-xl font-medium focus:outline-none ${
                   activeTab === tab
-                    ? "rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-lg scale-105"
-                    : "rounded-full bg-white text-gray-700 border border-gray-300 hover:bg-indigo-50 hover:text-indigo-600"
+                    ? "bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-lg scale-105"
+                    : "bg-white text-gray-700 border border-gray-300 hover:bg-indigo-50 hover:text-indigo-600"
                 }`}
               >
                 {tab
@@ -382,7 +384,6 @@ const TourDetails = () => {
             ))}
           </div>
         </motion.section>
-
         <motion.section
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
