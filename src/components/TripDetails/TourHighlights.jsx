@@ -32,14 +32,68 @@
 // export default TourHighlights;
 
 
+// import { motion } from 'framer-motion';
+// import { Star, CheckCircle2, MapPin } from 'lucide-react';
+
+// const TourHighlights = ({ highlights }) => {
+//   // Safety check to prevent crash if highlights is undefined/null
+//   if (!highlights || highlights.length === 0) {
+//     return (
+//       <div className="bg-gray-50 p-6 rounded-2xl border border-gray-200 text-center text-gray-500">
+//         No specific highlights available for this tour.
+//       </div>
+//     );
+//   }
+
+//   return (
+//     <motion.div
+//       initial={{ opacity: 0, y: 20 }}
+//       animate={{ opacity: 1, y: 0 }}
+//       transition={{ duration: 0.6 }}
+//       className="bg-gradient-to-br from-blue-50 to-white p-6 md:p-8 rounded-2xl shadow-lg border border-blue-100"
+//     >
+//       <h2 className="text-2xl md:text-3xl font-extrabold text-blue-900 mb-6 flex items-center">
+//         <Star className="w-6 h-6 md:w-8 md:h-8 text-yellow-500 mr-3 fill-yellow-500" />
+//         Tour Highlights
+//       </h2>
+
+//       <ul className="space-y-4">
+//         {highlights.map((highlight, idx) => (
+//           <motion.li
+//             key={idx}
+//             initial={{ x: -20, opacity: 0 }}
+//             animate={{ x: 0, opacity: 1 }}
+//             transition={{ delay: idx * 0.1, duration: 0.5 }}
+//             className="flex items-start bg-white p-4 rounded-xl shadow-sm border border-blue-50 hover:shadow-md hover:border-blue-200 transition-all duration-300 group"
+//           >
+//             {/* Conditional Icon: Map pin for 'Visit' items, Check for others */}
+//             <div className="mt-1 flex-shrink-0">
+//               {highlight.toLowerCase().includes("visit") ? (
+//                 <MapPin className="w-5 h-5 text-red-500 group-hover:scale-110 transition-transform" />
+//               ) : (
+//                 <CheckCircle2 className="w-5 h-5 text-green-500 group-hover:scale-110 transition-transform" />
+//               )}
+//             </div>
+
+//             <span className="ml-3 text-lg md:text-xl text-gray-700 font-medium leading-relaxed group-hover:text-blue-800 transition-colors">
+//               {highlight}
+//             </span>
+//           </motion.li>
+//         ))}
+//       </ul>
+//     </motion.div>
+//   );
+// };
+
+// export default TourHighlights;
+
 import { motion } from 'framer-motion';
 import { Star, CheckCircle2, MapPin } from 'lucide-react';
 
 const TourHighlights = ({ highlights }) => {
-  // Safety check to prevent crash if highlights is undefined/null
   if (!highlights || highlights.length === 0) {
     return (
-      <div className="bg-gray-50 p-6 rounded-2xl border border-gray-200 text-center text-gray-500">
+      <div className="bg-white p-10 sm:p-12 rounded-[40px] border border-gray-200 text-center text-gray-600 text-xl shadow-lg">
         No specific highlights available for this tour.
       </div>
     );
@@ -47,35 +101,34 @@ const TourHighlights = ({ highlights }) => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-      className="bg-gradient-to-br from-blue-50 to-white p-6 md:p-8 rounded-2xl shadow-lg border border-blue-100"
+      transition={{ duration: 0.7 }}
+      className="bg-white p-10 sm:p-12 md:p-16 rounded-[50px] shadow-xl border border-gray-200"
     >
-      <h2 className="text-2xl md:text-3xl font-extrabold text-blue-900 mb-6 flex items-center">
-        <Star className="w-6 h-6 md:w-8 md:h-8 text-yellow-500 mr-3 fill-yellow-500" />
+      <h2 className="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-10 flex items-center">
+        <Star className="w-9 h-9 sm:w-10 sm:h-10 text-yellow-500 mr-4 animate-pulse" />
         Tour Highlights
       </h2>
 
-      <ul className="space-y-4">
+      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-8">
         {highlights.map((highlight, idx) => (
           <motion.li
             key={idx}
-            initial={{ x: -20, opacity: 0 }}
+            initial={{ x: -30, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            transition={{ delay: idx * 0.1, duration: 0.5 }}
-            className="flex items-start bg-white p-4 rounded-xl shadow-sm border border-blue-50 hover:shadow-md hover:border-blue-200 transition-all duration-300 group"
+            transition={{ delay: idx * 0.15, duration: 0.6 }}
+            className="flex items-center bg-gray-50 p-6 sm:p-8 rounded-[30px] shadow-sm border border-gray-100 hover:shadow-2xl hover:border-gray-300 transition-all duration-300 group"
           >
-            {/* Conditional Icon: Map pin for 'Visit' items, Check for others */}
-            <div className="mt-1 flex-shrink-0">
+            <div className="flex-shrink-0 flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 bg-white rounded-full shadow group-hover:bg-blue-50 transition-colors">
               {highlight.toLowerCase().includes("visit") ? (
-                <MapPin className="w-5 h-5 text-red-500 group-hover:scale-110 transition-transform" />
+                <MapPin className="w-7 h-7 sm:w-8 sm:h-8 text-red-500 group-hover:scale-125 group-hover:rotate-12 transition-transform duration-300" />
               ) : (
-                <CheckCircle2 className="w-5 h-5 text-green-500 group-hover:scale-110 transition-transform" />
+                <CheckCircle2 className="w-7 h-7 sm:w-8 sm:h-8 text-green-500 group-hover:scale-125 group-hover:rotate-12 transition-transform duration-300" />
               )}
             </div>
 
-            <span className="ml-3 text-lg md:text-xl text-gray-700 font-medium leading-relaxed group-hover:text-blue-800 transition-colors">
+            <span className="ml-5 text-xl sm:text-2xl md:text-3xl text-gray-700 font-medium group-hover:text-blue-600 transition-colors">
               {highlight}
             </span>
           </motion.li>

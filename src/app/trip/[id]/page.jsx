@@ -151,7 +151,6 @@
 
 // export default TourDetails;
 
-
 // // import React from 'react'
 
 // // const page = () => {
@@ -161,7 +160,6 @@
 // // }
 
 // // export default page
-
 
 "use client";
 import { useSelector } from "react-redux";
@@ -187,11 +185,13 @@ const TourDetails = () => {
   // Fetching Logic
   const { mutate, isPending } = useMutation({
     // Use the ID from useParams, fallback to hardcoded only for testing if needed
-    mutationFn: () => ToursService.fetchTourById(id || "8d90660e-b215-422b-a691-1c0507404b21"),
+    mutationFn: () =>
+      ToursService.fetchTourById(id || "8d90660e-b215-422b-a691-1c0507404b21"),
     onSuccess: (response) => {
       // FIX: Based on your JSON structure, the path is response.data.tour
       if (response?.data?.tour) {
         setTourData(response.data.tour);
+        cons
       } else {
         console.error("Structure mismatch:", response);
       }
@@ -213,42 +213,55 @@ const TourDetails = () => {
     if (!tourData) return null;
 
     // 1. Map Itinerary
-    const itinerary = tourData.days?.sort((a, b) => a.order - b.order).map((day) => ({
-      day: day.order,
-      title: `${day.sectors.from.destName} to ${day.sectors.to.destName}`,
-      description: `Travel from ${day.sectors.from.destName} via ${day.transport.type}.`,
-      monuments: day.monuments, // Pass full monument objects
-      meals: day.meals,
-      hotel: day.hotel,
-      image: day.monuments?.[0]?.image || tourData.coverPhotoUrl // Fallback image
-    })) || [];
+    const itinerary =
+      tourData.days
+        ?.sort((a, b) => a.order - b.order)
+        .map((day) => ({
+          day: day.order,
+          title: `${day.sectors.from.destName} to ${day.sectors.to.destName}`,
+          description: `Travel from ${day.sectors.from.destName} via ${day.transport.type}.`,
+          monuments: day.monuments, // Pass full monument objects
+          meals: day.meals,
+          hotel: day.hotel,
+          image: day.monuments?.[0]?.image || tourData.coverPhotoUrl, // Fallback image
+        })) || [];
 
     // 2. Derive Highlights (e.g., Unique Monuments & Destinations)
     const highlights = [];
-    tourData.days?.forEach(day => {
+    tourData.days?.forEach((day) => {
       // Add Destination
-      if (day.sectors.to.destName) highlights.push(`Visit ${day.sectors.to.destName}`);
+      if (day.sectors.to.destName)
+        highlights.push(`Visit ${day.sectors.to.destName}`);
       // Add Monuments
-      day.monuments?.forEach(mon => highlights.push(mon.name));
+      day.monuments?.forEach((mon) => highlights.push(mon.name));
     });
 
     // 3. Derive Accommodation List
-    const accommodation = tourData.days
-      ?.filter(day => day.hotel)
-      .map(day => `${day.hotel.name} (${day.hotel.destination}) - ${day.hotel.star_rating} Star`)
-      || [];
+    const accommodation =
+      tourData.days
+        ?.filter((day) => day.hotel)
+        .map(
+          (day) =>
+            `${day.hotel.name} (${day.hotel.destination}) - ${day.hotel.star_rating} Star`
+        ) || [];
 
     // 4. Derive Transport List
-    const transport = tourData.days
-      ?.map(day => `${day.transport.type} (${day.sectors.from.destName} to ${day.sectors.to.destName})`)
-      || [];
+    const transport =
+      tourData.days?.map(
+        (day) =>
+          `${day.transport.type} (${day.sectors.from.destName} to ${day.sectors.to.destName})`
+      ) || [];
 
     // 5. Derive Inclusions (Example logic based on data presence)
     const inclusions = [
-      ...new Set(tourData.days?.map(d => `Stay at ${d.hotel?.name || 'Selected Hotels'}`)),
+      ...new Set(
+        tourData.days?.map(
+          (d) => `Stay at ${d.hotel?.name || "Selected Hotels"}`
+        )
+      ),
       "Daily Breakfast (as per hotel policy)",
       "All transfers and sightseeing by private vehicle",
-      "Toll, parking, and driver allowance"
+      "Toll, parking, and driver allowance",
     ];
 
     // 6. Exclusions (Static or derived if API had a field)
@@ -256,7 +269,7 @@ const TourDetails = () => {
       "Airfare / Train fare",
       "Personal expenses",
       "Monument entry fees",
-      "Anything not mentioned in inclusions"
+      "Anything not mentioned in inclusions",
     ];
 
     return {
@@ -267,7 +280,7 @@ const TourDetails = () => {
       transport: [...new Set(transport)],
       inclusions,
       exclusions,
-      notice: ["Please carry valid ID proof", "Check-in time is 12:00 PM"] // Static placeholder
+      notice: ["Please carry valid ID proof", "Check-in time is 12:00 PM"], // Static placeholder
     };
   }, [tourData]);
 
@@ -286,13 +299,24 @@ const TourDetails = () => {
       case "itinerary":
         return <TourItinerary itinerary={mappedTour.itinerary} />;
       case "inclusions":
-        return <TourListSection title="Inclusions" items={mappedTour.inclusions} />;
+        return (
+          <TourListSection title="Inclusions" items={mappedTour.inclusions} />
+        );
       case "exclusions":
-        return <TourListSection title="Exclusions" items={mappedTour.exclusions} />;
+        return (
+          <TourListSection title="Exclusions" items={mappedTour.exclusions} />
+        );
       case "accommodation":
-        return <TourListSection title="Accommodation" items={mappedTour.accommodation} />;
+        return (
+          <TourListSection
+            title="Accommodation"
+            items={mappedTour.accommodation}
+          />
+        );
       case "transport":
-        return <TourListSection title="Transport" items={mappedTour.transport} />;
+        return (
+          <TourListSection title="Transport" items={mappedTour.transport} />
+        );
       case "notice":
         return <TourListSection title="Notice" items={mappedTour.notice} />;
       default:
@@ -331,7 +355,7 @@ const TourDetails = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="px-4 md:px-20 py-6 mt-4"
         >
-          <div className="bg-white p-3 !rounded-lg shadow-md border border-blue-200 flex flex-wrap gap-2 justify-around items-center">
+          <div className="text-2xl bg-white p-3 rounded-2xl shadow-md border border-blue-200 flex flex-wrap gap-20 justify-center items-center">
             {[
               "tour-highlights",
               "itinerary",
@@ -344,10 +368,11 @@ const TourDetails = () => {
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`px-4 py-2 md:px-6 md:py-4 rounded-full font-medium transition-all duration-300 text-sm md:text-base ${activeTab === tab
-                    ? "bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-lg"
-                    : "text-gray-600 hover:bg-gray-100"
-                  }`}
+                className={`px-6 py-4 rounded-full transition-all duration-300 text-xl md:text-2xl text-center ${
+                  activeTab === tab
+                    ? "rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-lg scale-105"
+                    : "rounded-full bg-white text-gray-700 border border-gray-300 hover:bg-indigo-50 hover:text-indigo-600"
+                }`}
               >
                 {tab
                   .split("-")
