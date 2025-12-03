@@ -38,13 +38,12 @@ const Navbar = () => {
         <div className="top-header d-none d-md-block ">
           <div className="container">
             <div className="flex justify-between items-center -mt-4">
-              <div className="col-md-6">
+              <div className="col-md-6  flex gap-50  w-full">
                 <ul className="text-center text-md-left top-message text-white cursor-pointer">
                   <li style={!isHome ? { color: "white" } : {}}>
                     <i
-                      className={`icofont-headphone-alt  ${
-                        !isHome ? "text-white" : ""
-                      } `}
+                      className={`icofont-headphone-alt  ${!isHome ? "text-white" : ""
+                        } `}
                     ></i>
                     Support
                   </li>
@@ -54,15 +53,47 @@ const Navbar = () => {
                       style={!isHome ? { color: "white" } : {}}
                     >
                       <i
-                        className={`icofont-email ${
-                          !isHome ? "text-white" : ""
-                        } `}
+                        className={`icofont-email ${!isHome ? "text-white" : ""
+                          } `}
                       ></i>
                       info@inditour.com
                     </a>
                   </li>
                 </ul>
+                <form className=" flex flex-row">
+                  <input
+                    className="form-control mr-sm-2 header_search d-none d-md-inline-block !rounded-2xl"
+                    style={{
+                      height: "35px",
+                      width: "300px",
+                      fontSize: "16px"
+                    }}
+                    placeholder="Search..."
+                    aria-label="Search"
+                    type="search"
+                  />
+                  <button
+                    style={{
+                      height: "35px",
+                      width: "80px",
+                      fontSize: "14px",
+                      color: "white", fontWeight: "bold"
+                    }}
+                    className="btn rt-btn rt-gradient2 rt-rounded text-uppercase rt-Bshadow-1 searchBtn_desk d-md-inline-block d-none"
+                    type="submit"
+                  >
+                    Search
+                  </button>
+                  <button
+                    type="button"
+                    id="toggleSearch"
+                    className="mobile_searchBtn d-md-none"
+                  >
+                    <i className="fa-solid fa-magnifying-glass"></i>
+                  </button>
+                </form>
               </div>
+
               <div className="col-md-6">
                 <ul className="text-center text-md-right top-social">
                   <li>
@@ -131,11 +162,10 @@ const Navbar = () => {
                               {/* Sign Out Item */}
                               <button
                                 className={`flex items-center w-full px-4 py-2 text-red-600 hover:bg-red-50 
-          ${
-            logOutMutation.isPending
-              ? "opacity-70 cursor-not-allowed hover:bg-red-50"
-              : "cursor-pointer"
-          }`}
+          ${logOutMutation.isPending
+                                    ? "opacity-70 cursor-not-allowed hover:bg-red-50"
+                                    : "cursor-pointer"
+                                  }`}
                                 onClick={() => logOutMutation.mutate()}
                                 style={{ fontSize: "16px" }}
                                 disabled={logOutMutation.isPending}
@@ -232,10 +262,10 @@ const Navbar = () => {
                       <a className="cursor-pointer">Trip package</a>
                     </li>
                     <li onClick={() => router.push("/trip")}>
-                      <a className="cursor-pointer">Pocket Trip</a>
+                      <a className="cursor-pointer">India</a>
                     </li>
                     <li>
-                      <a href="service-1.html">Services</a>
+                      <a href="service-1.html">Our seas tour</a>
                     </li>
                     <li>
                       <a href="">About</a>
@@ -244,42 +274,11 @@ const Navbar = () => {
                       <a href="blog.html">Blog</a>
                     </li>
                     <li>
-                    <form className="form-inline">
-                      <input
-                        className="form-control mr-sm-2 header_search d-none d-md-inline-block !rounded-2xl" 
-                        style={{
-                          height:"35px",
-                          width:"160px",
-                          fontSize:"16px"
-                        }}
-                        placeholder="Search..."
-                        aria-label="Search"
-                        type="search"
-                      />
-                      <button
-                      style={{
-                          height:"35px",
-                          width:"80px",
-                          fontSize:"14px",
-                          color: "white", fontWeight: "bold"
-                        }}
-                        className="btn rt-btn rt-gradient2 rt-rounded text-uppercase rt-Bshadow-1 searchBtn_desk d-md-inline-block d-none"
-                        type="submit"
-                      >
-                        Search
-                      </button>
-                      <button
-                        type="button"
-                        id="toggleSearch"
-                        className="mobile_searchBtn d-md-none"
-                      >
-                        <i className="fa-solid fa-magnifying-glass"></i>
-                      </button>
-                    </form>
+
                     </li>
 
-                    
-                    
+
+
                   </ul>
                   <div className="mobile-menu">
                     <div className="menu-click">
