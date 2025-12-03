@@ -86,15 +86,15 @@
 // };
 
 // export default TourHighlights;
-
-import { motion } from 'framer-motion';
-import { Star, CheckCircle2, MapPin } from 'lucide-react';
+"use client";
+import { CheckCircle2 } from "lucide-react";
+import { motion } from "framer-motion";
 
 const TourHighlights = ({ highlights }) => {
   if (!highlights || highlights.length === 0) {
     return (
-      <div className="bg-white p-10 sm:p-12 rounded-[40px] border border-gray-200 text-center text-gray-600 text-xl shadow-lg">
-        No specific highlights available for this tour.
+      <div className="bg-gray-50 p-6 rounded-xl border text-center text-gray-500 text-lg">
+        No Highlights Available
       </div>
     );
   }
@@ -103,37 +103,34 @@ const TourHighlights = ({ highlights }) => {
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.7 }}
-      className="bg-white p-10 sm:p-12 md:p-16 rounded-[50px] shadow-xl border border-gray-200"
+      transition={{ duration: 0.4 }}
+      className="w-full"
     >
-      <h2 className="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-10 flex items-center">
-        <Star className="w-9 h-9 sm:w-10 sm:h-10 text-yellow-500 mr-4 animate-pulse" />
+      <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">
         Tour Highlights
       </h2>
 
-      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-        {highlights.map((highlight, idx) => (
-          <motion.li
-            key={idx}
-            initial={{ x: -30, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ delay: idx * 0.15, duration: 0.6 }}
-            className="flex items-center bg-gray-50 p-6 sm:p-8 rounded-[30px] shadow-sm border border-gray-100 hover:shadow-2xl hover:border-gray-300 transition-all duration-300 group"
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {highlights.map((item, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: index * 0.05 }}
+            whileHover={{ scale: 1.04, y: -4 }}
+            className="p-6 rounded-2xl shadow-lg border border-blue-100 bg-white hover:shadow-xl transition-all duration-300 cursor-pointer"
           >
-            <div className="flex-shrink-0 flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 bg-white rounded-full shadow group-hover:bg-blue-50 transition-colors">
-              {highlight.toLowerCase().includes("visit") ? (
-                <MapPin className="w-7 h-7 sm:w-8 sm:h-8 text-red-500 group-hover:scale-125 group-hover:rotate-12 transition-transform duration-300" />
-              ) : (
-                <CheckCircle2 className="w-7 h-7 sm:w-8 sm:h-8 text-green-500 group-hover:scale-125 group-hover:rotate-12 transition-transform duration-300" />
-              )}
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 flex justify-center items-center shadow-md">
+                <CheckCircle2 className="text-white w-7 h-7" />
+              </div>
+              <p className="text-lg font-semibold text-gray-700">
+                {item}
+              </p>
             </div>
-
-            <span className="ml-5 text-xl sm:text-2xl md:text-3xl text-gray-700 font-medium group-hover:text-blue-600 transition-colors">
-              {highlight}
-            </span>
-          </motion.li>
+          </motion.div>
         ))}
-      </ul>
+      </div>
     </motion.div>
   );
 };
