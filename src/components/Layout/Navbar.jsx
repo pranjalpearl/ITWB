@@ -49,14 +49,14 @@ const Navbar = () => {
                   </li>
                   <li>
                     <a
-                      href="mailto:info@inditour.com"
+                      href="mailto:mail@inditoir.com"
                       style={!isHome ? { color: "white" } : {}}
                     >
                       <i
                         className={`icofont-email ${!isHome ? "text-white" : ""
                           } `}
                       ></i>
-                      info@inditour.com
+                      mail@inditoir.com
                     </a>
                   </li>
                 </ul>

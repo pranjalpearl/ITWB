@@ -365,7 +365,7 @@ const Service = () => {
             <div className="rt-section-title-wrapper mb-12">
               <p className=" text-blue-600 font-bold text-lg">WHY Choose Our Travel Agency?</p>
               <h2 className="rt-section-title text-4xl font-bold">
-                Our Best-Selling Quick Escapes
+                Our Hot-Selling Tour
               </h2>
               <p className="text-gray-600 mt-4 max-w-2xl mx-auto">
                 From weekend getaways to quick adventures, we make sure every trip is stress-free, affordable, and full of unforgettable memories.
