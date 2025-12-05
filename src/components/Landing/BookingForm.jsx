@@ -312,7 +312,7 @@ const BookingForm = () => {
         searchParams={{
           countryId: selectedCountry,
           stateId: selectedState,
-          tourType: selectedTourType
+          tourTypeId: selectedTourType
         }}
       />
 
