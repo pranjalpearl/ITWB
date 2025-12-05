@@ -251,7 +251,7 @@ const Navbar = () => {
                         <a
       className={`cursor-pointer ${
         // 1. ON HOVER COLOR RED (for the text)
-        'group-hover:text-red-600 ' 
+        'group-hover:text-red-600  hover:text-red-600 ' 
         // 2. ACTIVE COLOR: Blue text (matches image)
         + (activeDropdown === menu.id ? 'text-blue-600' : '') 
       }`}
@@ -274,7 +274,7 @@ const Navbar = () => {
                           <div
                             // MODIFIED: Changed mt-3 to mt-0.5 to bridge the gap between menu item and dropdown for seamless hover (Fixes the 'disappear' issue).
                             // The dropdown box (bg-white, shadow-2xl) provides the color and border look.
-                            className="absolute right-1 top-full mt-0.5 w-[1100px] bg-white rounded-xl shadow-2xl p-8 z-50 pointer-events-auto transition-opacity duration-300"
+                            className="absolute right-1 top-full mt-0.5 w-[1000px] bg-white rounded-xl shadow-2xl p-8 z-50 pointer-events-auto transition-opacity duration-300"
                           >
                             <div className="flex">
                               {/* LEFT SIDE: Categories and Items - 2 columns, scrollable */}
