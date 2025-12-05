@@ -342,8 +342,11 @@ const Navbar = () => {
                     ))}
 
                     {/* STATIC MENU ITEMS (from previous) */}
-                    {/* <li onClick={() => router.push("/trip")}>...</li> */}
+                    {/* <li onClick={() => router.push("/blog")}>Blog</li> */}
                     <li></li> {/* Empty li from previous */}
+                   <li className="current-menu-item" onClick={() => router.push("/")}>
+                      <a className="cursor-pointer">Blog</a>
+                    </li>
                   </ul>
                   {/* Mobile menu logic (from previous) */}
                   <div className="mobile-menu">
