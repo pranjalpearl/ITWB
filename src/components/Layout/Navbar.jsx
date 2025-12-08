@@ -249,20 +249,27 @@ const Navbar = () => {
                         onMouseLeave={() => setActiveDropdown(null)}
                       >
                         <a
-                           // ADDED: Conditional class to make text blue when dropdown is active.
-                          className={`cursor-pointer ${
-                            activeDropdown === menu.id ? 'text-blue-600' : '' 
-                          }`}
-                        >
-                          {menu.title}
-                          {/* ADDED: Up-caret (^) next to the text when the dropdown is open */}
-                          {activeDropdown === menu.id && (
-                              <span className="ml-1 inline-block text-blue-600 transform">
-                                  &#9650;
-                              </span>
-                          )}
-                        </a>
-
+      className={`cursor-pointer ${
+        // 1. ON HOVER COLOR RED (for the text)
+        'group-hover:text-red-600  hover:text-red-600 ' 
+        // 2. ACTIVE COLOR: Blue text (matches image)
+        + (activeDropdown === menu.id ? 'text-blue-600' : '') 
+      }`}
+    >
+      {menu.title}
+      {/* 3. ICON (UP/DOWN) + COLOR LOGIC */}
+      <span 
+        className={`ml-1 inline-block text-sm transition-transform duration-200 
+          ${
+            activeDropdown === menu.id 
+              ? 'transform rotate-180 text-blue-600' 
+              : 'text-current group-hover:text-red-600'
+          }
+        `}
+      >
+        <i className="fas fa-chevron-down"></i> 
+      </span>
+    </a>
                         {activeDropdown === menu.id && menu.categories?.length > 0 && (
                           <div
                             // MODIFIED: Changed mt-3 to mt-0.5 to bridge the gap between menu item and dropdown for seamless hover (Fixes the 'disappear' issue).
@@ -335,8 +342,11 @@ const Navbar = () => {
                     ))}
 
                     {/* STATIC MENU ITEMS (from previous) */}
-                    {/* <li onClick={() => router.push("/trip")}>...</li> */}
+                    {/* <li onClick={() => router.push("/blog")}>Blog</li> */}
                     <li></li> {/* Empty li from previous */}
+                   <li className="current-menu-item" onClick={() => router.push("/")}>
+                      <a className="cursor-pointer">Blog</a>
+                    </li>
                   </ul>
                   {/* Mobile menu logic (from previous) */}
                   <div className="mobile-menu">
