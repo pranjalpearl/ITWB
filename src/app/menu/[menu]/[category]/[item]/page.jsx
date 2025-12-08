@@ -52,7 +52,7 @@ export default function ItemPage() {
     );
 
   return (
-    <div className="flex justify-center items-center w-full min-h-screen bg-blue-600 p-6 md:p-10 mt-24">
+    <div className="flex justify-center items-center w-full min-h-screen p-6 md:p-10 mt-24">
       <div className="relative w-full mx-6 h-[400px] rounded-3xl overflow-hidden shadow-xl">
         {/* Background Image */}
         <img
