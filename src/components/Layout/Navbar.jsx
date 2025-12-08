@@ -242,9 +242,9 @@ const Navbar = () => {
                       <li
                         key={menu.id}
                         className="relative"
-                        onClick={() =>
-                          router.push(`/${createSlug(menu.title)}`) // Main menu click: /tour, /dubai
-                        }
+                        // onClick={() =>
+                        //   router.push(`/${createSlug(menu.title)}`) 
+                        // }
                         onMouseEnter={() => setActiveDropdown(menu.id)}
                         onMouseLeave={() => setActiveDropdown(null)}
                       >
@@ -287,7 +287,7 @@ const Navbar = () => {
                                       onClick={(e) => {
                                         e.stopPropagation(); // Prevent the parent li's click handler from running
                                         router.push(
-                                          `/${createSlug(menu.title)}/${createSlug(cat.title)}`
+                                          `/menu/${createSlug(menu.title)}/${createSlug(cat.title)}`
                                         );
                                         setActiveDropdown(null); // Close dropdown on click
                                       }}
@@ -304,7 +304,7 @@ const Navbar = () => {
                                           onClick={(e) => {
                                             e.stopPropagation(); // Prevent the parent li's click handler from running
                                             router.push(
-                                              `/${createSlug(menu.title)}/${createSlug(cat.title)}/${createSlug(item.title)}`
+                                              `/menu/${createSlug(menu.title)}/${createSlug(cat.title)}/${createSlug(item.title)}`
                                             );
                                             setActiveDropdown(null); // Close dropdown on click
                                           }}
