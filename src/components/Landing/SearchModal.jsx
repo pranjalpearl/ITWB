@@ -1,74 +1,36 @@
-// // components/SearchModal.js
-// import React from 'react';
-
-// const SearchModal = ({ isOpen, onClose, searchParams }) => {
-//     if (!isOpen) return null;
-
-//     return (
-//         <div
-//             style={{
-//                 position: 'fixed',
-//                 top: 0,
-//                 left: 0,
-//                 right: 0,
-//                 bottom: 0,
-//                 backgroundColor: 'rgba(0,0,0,0.5)',
-//                 display: 'flex',
-//                 alignItems: 'center',
-//                 justifyContent: 'center',
-//                 zIndex: 9999
-//             }}
-//         >
-//             <div
-//                 style={{
-//                     background: '#fff',
-//                     padding: '30px',
-//                     borderRadius: '8px',
-//                     minWidth: '300px',
-//                     textAlign: 'center',
-//                     position: 'relative'
-//                 }}
-//             >
-//                 <h3 style={{ marginBottom: '15px' }}>Coming Soon</h3>
-//                 <div style={{ textAlign: 'left', marginBottom: '20px', fontSize: '14px', color: '#555' }}>
-//                     <p><strong>Country ID:</strong> {searchParams.countryId || 'Not Selected'}</p>
-//                     <p><strong>State ID:</strong> {searchParams.stateId || 'Not Selected'}</p>
-//                     <p><strong>Tour Type:</strong> {searchParams.tourType || 'Not Selected'}</p>
-//                 </div>
-
-//                 <button
-//                     onClick={onClose}
-//                     className="btn btn-primary" // Assuming you have bootstrap or theme classes
-//                     style={{ padding: '8px 20px', cursor: 'pointer' }}
-//                 >
-//                     Close
-//                 </button>
-//             </div>
-//         </div>
-//     );
-// };
-
-// export default SearchModal;
-
-
-
-
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import instance from "@/utils/axiosInstance";
+import { Image, MapPin, Globe, Type, X, Loader2 } from "lucide-react";
+
+// Swiper Slider
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/free-mode";
+import "swiper/css/pagination";
+import { FreeMode, Pagination } from "swiper/modules";
 
 const SearchModal = ({ isOpen, onClose, searchParams }) => {
   const [loading, setLoading] = useState(false);
   const [tours, setTours] = useState([]);
-  const [selectedTour, setSelectedTour] = useState(null);
-  const [detailsLoading, setDetailsLoading] = useState(false);
+
+  const modalRef = useRef(); // used for outside click close
+
+  // Close modal when clicking outside box
+  const handleClickOutside = (event) => {
+    if (modalRef.current && !modalRef.current.contains(event.target)) {
+      onClose();
+    }
+  };
 
   useEffect(() => {
     if (isOpen) {
-      setSelectedTour(null);
       fetchTours();
+      document.addEventListener("mousedown", handleClickOutside);
     }
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isOpen]);
 
+  // Fetch tours API call
   const fetchTours = async () => {
     setLoading(true);
     try {
@@ -82,119 +44,145 @@ const SearchModal = ({ isOpen, onClose, searchParams }) => {
     setLoading(false);
   };
 
-  const fetchTourDetails = async (id) => {
-    setDetailsLoading(true);
-    try {
-      const res = await instance.get(`/website-tour/get-tour-by-id/${id}`);
-      setSelectedTour(res.data.data.tour);
-    } catch (err) {
-      console.log(err);
-    }
-    setDetailsLoading(false);
-  };
-
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex justify-center items-center z-[9999] p-2 sm:p-8">
-      <div className="bg-white w-full max-w-2xl sm:max-h-[85vh] overflow-auto rounded-xl shadow-2xl p-6 animate-fadeIn">
-
-        {/* HEADER */}
-        <div className="flex justify-between items-center pb-3 border-b">
-          <h2 className="text-xl font-bold text-gray-700">
-            {selectedTour ? "Tour Details" : "Available Tours"}
+    // Modal background
+    <div className="fixed inset-0 bg-black/60 backdrop-blur-md flex justify-center items-center z-[9999] p-3">
+      {/* Modal Container */}
+      <div
+        ref={modalRef}
+        className="bg-white w-full max-w-5xl max-h-[92vh] overflow-y-auto rounded-2xl shadow-2xl border border-gray-200"
+      >
+        {/* Header */}
+        <div className="flex justify-between items-center px-6 py-4 border-b bg-gradient-to-r from-purple-600 to-blue-600">
+          <h2 className="text-xl font-semibold text-white flex items-center gap-2">
+            🔍 Search Results — {tours.length} found
           </h2>
-          <button onClick={onClose} className="text-red-600 text-xl font-bold hover:scale-110">
-            ✖
+
+          <button
+            onClick={onClose}
+            className="text-white hover:bg-white/20 rounded-full p-2 transition"
+          >
+            <X size={20} />
           </button>
         </div>
 
-        {/* FILTER INFO */}
-        {!selectedTour && (
-          <div className="text-sm mt-3 mb-4 bg-gray-100 p-3 rounded-md">
-            <b>Country:</b> {searchParams.countryId} | 
-            <b> State:</b> {searchParams.stateId} |
-            <b> Type:</b> {searchParams.tourTypeId}
+        {/* Display Filters */}
+        <div className="flex flex-wrap gap-2 px-6 py-3 bg-gray-50 border-b">
+          <span className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm flex items-center gap-1">
+            <Globe size={14} /> Country: {searchParams.countryId}
+          </span>
+          <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm flex items-center gap-1">
+            <MapPin size={14} /> State: {searchParams.stateId}
+          </span>
+          <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm flex items-center gap-1">
+            <Type size={14} /> Type: {searchParams.tourTypeId}
+          </span>
+        </div>
+
+        {/* Loader */}
+        {loading && (
+          <div className="flex flex-col items-center justify-center py-14">
+            <Loader2 className="animate-spin h-10 w-10 text-purple-600" />
+            <p className="mt-2 text-purple-600 font-medium">
+              Searching tours...
+            </p>
           </div>
         )}
 
-        {/* LOADING */}
-        {loading && <p className="text-center py-6 font-medium">⏳ Searching tours...</p>}
-        {detailsLoading && <p className="text-center py-6 font-medium">⏳ Loading details...</p>}
-
-        {/* NO TOURS */}
-        {!loading && tours.length === 0 && !selectedTour && (
-          <p className="text-center text-gray-500 py-4">❌ No Tours Found</p>
+        {/* No Data */}
+        {!loading && tours.length === 0 && (
+          <p className="text-center text-gray-500 py-10">No Tours Found</p>
         )}
 
-        {/* TOUR LIST */}
-        {!loading && !selectedTour &&
+        {/* Tour Cards */}
+        {!loading &&
           tours.map((tour) => (
             <div
               key={tour.id}
-              className="border rounded-lg p-4 mb-3 flex justify-between items-center hover:bg-gray-100 cursor-pointer transition"
+              className="border-b px-6 py-6 transition hover:bg-gray-50"
             >
-              <div>
-                <h3 className="font-semibold text-lg">{tour.tourName}</h3>
-                <p className="text-sm text-gray-500">{tour.tourCode}</p>
-                <span className="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded">
-                  {tour.tourType?.name}
-                </span>
+              {/* Row - Image Left + Content Right */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+                {/* Left Image */}
+                <img
+                  src={tour.coverPhotoUrl}
+                  alt="Cover"
+                  className="rounded-xl w-full h-64 object-cover border"
+                />
+
+                {/* Right Content */}
+                <div className="sm:col-span-2 flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900">
+                      {tour.tourName}
+                    </h3>
+                    <p className="text-gray-600 text-sm mt-1">
+                      Tour Code — {tour.tourCode}
+                    </p>
+
+                    {/* Tags */}
+                    <div className="flex flex-wrap gap-2 mt-3">
+                      <span className="px-2 py-1 text-xs bg-purple-100 text-purple-800 rounded">
+                        {tour.country?.name}
+                      </span>
+                      <span className="px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded">
+                        {tour.state?.name}
+                      </span>
+                      <span className="px-2 py-1 text-xs bg-green-100 text-green-800 rounded">
+                        {tour.tourType?.name}
+                      </span>
+                    </div>
+
+                    {/* Description */}
+                    <p className="text-gray-700 mt-3 text-sm">
+                      {tour.description || "No description available."}
+                    </p>
+                  </div>
+
+                  {/* View Button */}
+                  <button
+                    className="mt-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white px-5 py-2 rounded-lg hover:opacity-90 w-fit"
+                    onClick={() => alert("More Details Coming")}
+                  >
+                    View More Details
+                  </button>
+                </div>
               </div>
 
-              <button
-                className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700"
-                onClick={() => fetchTourDetails(tour.id)}
-              >
-                View →
-              </button>
+              {/* Gallery Slider */}
+              {tour?.images?.length > 0 && (
+                <div className="mt-5">
+                  <h4 className="font-semibold text-gray-700 flex items-center gap-2 mb-2">
+                    <Image size={18} /> Gallery Photos
+                  </h4>
+
+                  <Swiper
+                    slidesPerView={3}
+                    spaceBetween={12}
+                    freeMode={true}
+                    pagination={{ clickable: true }}
+                    modules={[FreeMode, Pagination]}
+                    breakpoints={{
+                      320: { slidesPerView: 1 },
+                      480: { slidesPerView: 2 },
+                      768: { slidesPerView: 3 },
+                    }}
+                  >
+                    {tour.images.map((img) => (
+                      <SwiperSlide key={img.id}>
+                        <img
+                          src={img.secureUrl}
+                          className="h-28 w-full object-cover rounded-lg border hover:scale-105 transition"
+                        />
+                      </SwiperSlide>
+                    ))}
+                  </Swiper>
+                </div>
+              )}
             </div>
           ))}
-
-        {/* TOUR DETAILS PAGE */}
-        {selectedTour && (
-          <>
-            {/* Cover Image */}
-            <img
-              src={selectedTour.coverPhotoUrl}
-              className="w-full h-48 sm:h-60 object-cover rounded-lg shadow-md my-3"
-            />
-
-            {/* Title */}
-            <h3 className="text-2xl font-bold">{selectedTour.tourName}</h3>
-            <p className="text-gray-600 text-sm mb-2">Code: {selectedTour.tourCode}</p>
-
-            {/* Description */}
-            <p className="text-gray-700 my-3 leading-relaxed">
-              {selectedTour.description}
-            </p>
-
-            {/* Gallery */}
-            {selectedTour.images?.length > 0 && (
-              <>
-                <h4 className="font-bold text-lg mt-3">Gallery</h4>
-                <div className="flex gap-2 overflow-x-auto py-2">
-                  {selectedTour.images.map((img) => (
-                    <img
-                      key={img.id}
-                      src={img.secureUrl}
-                      className="h-24 w-32 object-cover rounded-md shadow-sm"
-                    />
-                  ))}
-                </div>
-              </>
-            )}
-
-            {/* Back Button */}
-            <button
-              className="mt-4 bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 w-full sm:w-auto"
-              onClick={() => setSelectedTour(null)}
-            >
-              ← Back to List
-            </button>
-          </>
-        )}
-
       </div>
     </div>
   );
