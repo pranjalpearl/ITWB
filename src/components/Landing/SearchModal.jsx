@@ -1,200 +1,255 @@
-// // components/SearchModal.js
-// import React from 'react';
-
-// const SearchModal = ({ isOpen, onClose, searchParams }) => {
-//     if (!isOpen) return null;
-
-//     return (
-//         <div
-//             style={{
-//                 position: 'fixed',
-//                 top: 0,
-//                 left: 0,
-//                 right: 0,
-//                 bottom: 0,
-//                 backgroundColor: 'rgba(0,0,0,0.5)',
-//                 display: 'flex',
-//                 alignItems: 'center',
-//                 justifyContent: 'center',
-//                 zIndex: 9999
-//             }}
-//         >
-//             <div
-//                 style={{
-//                     background: '#fff',
-//                     padding: '30px',
-//                     borderRadius: '8px',
-//                     minWidth: '300px',
-//                     textAlign: 'center',
-//                     position: 'relative'
-//                 }}
-//             >
-//                 <h3 style={{ marginBottom: '15px' }}>Coming Soon</h3>
-//                 <div style={{ textAlign: 'left', marginBottom: '20px', fontSize: '14px', color: '#555' }}>
-//                     <p><strong>Country ID:</strong> {searchParams.countryId || 'Not Selected'}</p>
-//                     <p><strong>State ID:</strong> {searchParams.stateId || 'Not Selected'}</p>
-//                     <p><strong>Tour Type:</strong> {searchParams.tourType || 'Not Selected'}</p>
-//                 </div>
-
-//                 <button
-//                     onClick={onClose}
-//                     className="btn btn-primary" // Assuming you have bootstrap or theme classes
-//                     style={{ padding: '8px 20px', cursor: 'pointer' }}
-//                 >
-//                     Close
-//                 </button>
-//             </div>
-//         </div>
-//     );
-// };
-
-// export default SearchModal;
-
-
-
-
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import instance from "@/utils/axiosInstance";
+import { MapPin, Globe, Type, X, Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import ScrollableTooltip from "@/components/common/ScrollableTooltip";
+import { Info } from "lucide-react";
+
+const TourCard = ({ tour }) => {
+  const router = useRouter();
+  const [showFull, setShowFull] = useState(false);
+
+  // Safely handle empty description
+  const description = tour.description || "";
+
+  return (
+    // Each tour card container
+    <div className="border-b border-gray-100 px-4 py-4 last:border-none">
+      {/* Main layout: image left, info right */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 items-start">
+        {/* LEFT: Main image + gallery */}
+        <div className="flex flex-col">
+          {/* Main cover image */}
+          <div className="relative rounded-xl overflow-hidden border border-gray-100 shadow-sm">
+            <img
+              src={tour.coverPhotoUrl}
+              alt={tour.tourName || "Tour cover image"}
+              className="w-full h-56 sm:h-64 object-cover"
+              loading="lazy"
+            />
+          </div>
+
+          {/* Small gallery under main image */}
+          {tour?.images?.length > 0 && (
+            <div className="mt-2 flex gap-2 overflow-x-auto pb-1">
+              {tour.images.map((img) => (
+                <button
+                  key={img.id}
+                  type="button"
+                  className="flex-shrink-0 rounded-lg overflow-hidden border border-gray-200 hover:border-purple-500 transition-transform duration-150 hover:scale-105"
+                >
+                  <img
+                    src={img.secureUrl}
+                    alt="Tour thumbnail"
+                    className="h-16 w-20 object-cover"
+                    loading="lazy"
+                  />
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* RIGHT: Text content */}
+        <div className="flex flex-col gap-2">
+          {/* Tour name + code */}
+          <div>
+            <h3 className="text-lg sm:text-xl font-semibold text-gray-900 leading-snug">
+              {tour.tourName}
+            </h3>
+            <p className="text-xs sm:text-sm text-gray-500 mt-0.5">
+              Code: <span className="font-medium">{tour.tourCode}</span>
+            </p>
+          </div>
+
+          {/* Description with tooltip */}
+          <div className="text-sm text-gray-700 leading-relaxed flex flex-col">
+            {/* Short preview */}
+            <p className="line-clamp-2">{description}</p>
+
+            {/* Button right aligned, small gap */}
+            {description.length > 120 && (
+              <div className="flex justify-end mt-1">
+                <ScrollableTooltip content={description}>
+                  <button className="flex items-center gap-1 text-purple-600 hover:text-purple-800 underline text-[11px] font-medium">
+                    View full description
+                    <Info size={13} />
+                  </button>
+                </ScrollableTooltip>
+              </div>
+            )}
+          </div>
+          
+
+          {/* Tags row: country, state, type */}
+          <div className="flex flex-wrap gap-1.5 mt-1">
+            {tour.country?.name && (
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-medium rounded-full bg-purple-50 text-purple-700 border border-purple-100">
+                <Globe size={12} />
+                {tour.country.name}
+              </span>
+            )}
+            {tour.state?.name && (
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-medium rounded-full bg-blue-50 text-blue-700 border border-blue-100">
+                <MapPin size={12} />
+                {tour.state.name}
+              </span>
+            )}
+            {tour.tourType?.name && (
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-medium rounded-full bg-green-50 text-green-700 border border-green-100">
+                <Type size={12} />
+                {tour.tourType.name}
+              </span>
+            )}
+          </div>
+
+          {/* Bottom action row */}
+          <div className="mt-2 flex items-center justify-between">
+            {/* You can show price / duration here later */}
+            <div className="text-xs text-gray-500">
+              {/* Simple placeholder for future meta info */}
+              {/* Example: 5 days · 4 nights */}
+            </div>
+
+            <button
+              type="button"
+              onClick={() => router.push(`/trip/${tour.id}`)}
+              className="inline-flex items-center justify-center px-3 py-1.5 min-h-[30px] text-xs sm:text-sm font-semibold !rounded-full bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-md hover:shadow-lg hover:opacity-95 active:scale-[0.98] transition"
+            >
+              View more details
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const SearchModal = ({ isOpen, onClose, searchParams }) => {
   const [loading, setLoading] = useState(false);
   const [tours, setTours] = useState([]);
-  const [selectedTour, setSelectedTour] = useState(null);
-  const [detailsLoading, setDetailsLoading] = useState(false);
 
-  useEffect(() => {
-    if (isOpen) {
-      setSelectedTour(null);
-      fetchTours();
+  // For closing modal when clicking outside
+  const modalRef = useRef(null);
+
+  // Handle outside click
+  const handleClickOutside = (event) => {
+    if (modalRef.current && !modalRef.current.contains(event.target)) {
+      onClose();
     }
-  }, [isOpen]);
+  };
 
+  // Fetch tours when modal opens
   const fetchTours = async () => {
     setLoading(true);
     try {
       const response = await instance.get(`/website-tour/get-tour-cst`, {
         params: searchParams,
       });
-      setTours(response.data.data);
+      setTours(response.data.data || []);
     } catch (err) {
-      console.log(err);
+      console.error("Error fetching tours:", err);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
-  const fetchTourDetails = async (id) => {
-    setDetailsLoading(true);
-    try {
-      const res = await instance.get(`/website-tour/get-tour-by-id/${id}`);
-      setSelectedTour(res.data.data.tour);
-    } catch (err) {
-      console.log(err);
+  // Handle open / close side effects
+  useEffect(() => {
+    if (isOpen) {
+      fetchTours();
+      document.addEventListener("mousedown", handleClickOutside);
     }
-    setDetailsLoading(false);
-  };
 
+    // Clean-up when modal closes or component unmounts
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen]);
+
+  // If modal is closed, render nothing
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex justify-center items-center z-[9999] p-2 sm:p-8">
-      <div className="bg-white w-full max-w-2xl sm:max-h-[85vh] overflow-auto rounded-xl shadow-2xl p-6 animate-fadeIn">
+    // Background overlay
+    <div className="fixed inset-0 z-[9999] bg-black/60 backdrop-blur-sm flex items-center justify-center p-3">
+      {/* Modal box */}
+      <div
+        ref={modalRef}
+        className="bg-white w-full max-w-6xl max-h-[90vh] rounded-2xl shadow-2xl border border-gray-200 flex flex-col overflow-hidden"
+      >
+        {/* Header section */}
+        {/* Header section */}
+        <div className="flex items-center justify-between px-5 py-3 bg-gradient-to-r from-purple-600 to-blue-600 border-b border-gray-300/40 shadow-sm">
+          {/* Title + Count */}
+          <div className="flex flex-col">
+            <h2 className="mt-2 text-base sm:text-lg font-semibold text-white flex items-center gap-2 tracking-wide">
+              🔍 Search Results
+            </h2>
 
-        {/* HEADER */}
-        <div className="flex justify-between items-center pb-3 border-b">
-          <h2 className="text-xl font-bold text-gray-700">
-            {selectedTour ? "Tour Details" : "Available Tours"}
-          </h2>
-          <button onClick={onClose} className="text-red-600 text-xl font-bold hover:scale-110">
-            ✖
+            <p className="font-semibold mt-0.5 text-[11px] sm:text-xs px-2 py-0.5 w-fit text-white rounded-full backdrop-blur-md">
+              {tours.length} Tour{tours.length !== 1 ? "s" : ""} Found
+            </p>
+          </div>
+
+          {/* Close button */}
+          <button
+            type="button"
+            onClick={onClose}
+            className="inline-flex items-center justify-center rounded-full p-1.5 bg-white/10 border border-white/20 hover:bg-white/20 transition"
+          >
+            <X size={18} className="text-white" />
           </button>
         </div>
 
-        {/* FILTER INFO */}
-        {!selectedTour && (
-          <div className="text-sm mt-3 mb-4 bg-gray-100 p-3 rounded-md">
-            <b>Country:</b> {searchParams.countryId} | 
-            <b> State:</b> {searchParams.stateId} |
-            <b> Type:</b> {searchParams.tourTypeId}
-          </div>
-        )}
+        {/* Active filters row */}
+        <div className="px-4 sm:px-6 py-2.5 border-b bg-gray-50 flex flex-wrap gap-5">
+          {searchParams?.countryId && (
+            <span className="inline-flex items-center gap-1 px-2.5 py-1 text-xl rounded-full bg-purple-100 text-purple-800">
+              <Globe size={14} />
+              Country: {searchParams.countryId}
+            </span>
+          )}
+          {searchParams?.stateId && (
+            <span className="inline-flex items-center gap-1 px-2.5 py-1 text-xl rounded-full bg-blue-100 text-blue-800">
+              <MapPin size={14} />
+              State: {searchParams.stateId}
+            </span>
+          )}
+          {searchParams?.tourTypeId && (
+            <span className="inline-flex items-center gap-1 px-2.5 py-1 text-xl rounded-full bg-green-100 text-green-800">
+              <Type size={14} />
+              Type: {searchParams.tourTypeId}
+            </span>
+          )}
+        </div>
 
-        {/* LOADING */}
-        {loading && <p className="text-center py-6 font-medium">⏳ Searching tours...</p>}
-        {detailsLoading && <p className="text-center py-6 font-medium">⏳ Loading details...</p>}
-
-        {/* NO TOURS */}
-        {!loading && tours.length === 0 && !selectedTour && (
-          <p className="text-center text-gray-500 py-4">❌ No Tours Found</p>
-        )}
-
-        {/* TOUR LIST */}
-        {!loading && !selectedTour &&
-          tours.map((tour) => (
-            <div
-              key={tour.id}
-              className="border rounded-lg p-4 mb-3 flex justify-between items-center hover:bg-gray-100 cursor-pointer transition"
-            >
-              <div>
-                <h3 className="font-semibold text-lg">{tour.tourName}</h3>
-                <p className="text-sm text-gray-500">{tour.tourCode}</p>
-                <span className="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded">
-                  {tour.tourType?.name}
-                </span>
-              </div>
-
-              <button
-                className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700"
-                onClick={() => fetchTourDetails(tour.id)}
-              >
-                View →
-              </button>
+        {/* Content area: scrollable */}
+        <div className="flex-1 overflow-y-auto">
+          {/* Loader state */}
+          {loading && (
+            <div className="flex flex-col items-center justify-center py-12">
+              <Loader2 className="animate-spin h-8 w-8 text-purple-600" />
+              <p className="mt-2 text-sm text-purple-700 font-medium">
+                Searching tours...
+              </p>
             </div>
-          ))}
+          )}
 
-        {/* TOUR DETAILS PAGE */}
-        {selectedTour && (
-          <>
-            {/* Cover Image */}
-            <img
-              src={selectedTour.coverPhotoUrl}
-              className="w-full h-48 sm:h-60 object-cover rounded-lg shadow-md my-3"
-            />
+          {/* No data state */}
+          {!loading && tours.length === 0 && (
+            <div className="py-10 flex items-center justify-center">
+              <p className="text-sm text-gray-500">
+                No tours found for selected filters.
+              </p>
+            </div>
+          )}
 
-            {/* Title */}
-            <h3 className="text-2xl font-bold">{selectedTour.tourName}</h3>
-            <p className="text-gray-600 text-sm mb-2">Code: {selectedTour.tourCode}</p>
-
-            {/* Description */}
-            <p className="text-gray-700 my-3 leading-relaxed">
-              {selectedTour.description}
-            </p>
-
-            {/* Gallery */}
-            {selectedTour.images?.length > 0 && (
-              <>
-                <h4 className="font-bold text-lg mt-3">Gallery</h4>
-                <div className="flex gap-2 overflow-x-auto py-2">
-                  {selectedTour.images.map((img) => (
-                    <img
-                      key={img.id}
-                      src={img.secureUrl}
-                      className="h-24 w-32 object-cover rounded-md shadow-sm"
-                    />
-                  ))}
-                </div>
-              </>
-            )}
-
-            {/* Back Button */}
-            <button
-              className="mt-4 bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 w-full sm:w-auto"
-              onClick={() => setSelectedTour(null)}
-            >
-              ← Back to List
-            </button>
-          </>
-        )}
-
+          {/* List of tour cards */}
+          {!loading &&
+            tours.map((tour) => <TourCard key={tour.id} tour={tour} />)}
+        </div>
       </div>
     </div>
   );
