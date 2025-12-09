@@ -304,7 +304,7 @@ const Navbar = () => {
                                           onClick={(e) => {
                                             e.stopPropagation(); // Prevent the parent li's click handler from running
                                             router.push(
-                                              `/menu/${createSlug(menu.title)}/${createSlug(cat.title)}/${createSlug(item.title)}`
+                                              `/menu/${createSlug(menu.title)}/${createSlug(cat.title)}/${createSlug(item.id)}`
                                             );
                                             setActiveDropdown(null); // Close dropdown on click
                                           }}
