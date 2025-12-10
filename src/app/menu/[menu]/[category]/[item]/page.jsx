@@ -45,24 +45,31 @@ export default function ItemPage() {
       );
 
       // Find item
-      const itemObj = categoryObj?.items.find(
-        (i) => normalize(i.title) === normalize(item)
-      );
+      const itemObj = categoryObj?.items.find((i) => i.id === item);
 
       // Fallback banner: item -> category -> menu
-      const finalItemData =
-        itemObj ||
-        (categoryObj && {
-          title: categoryObj.title,
-          description: `Explore ${categoryObj.title}!`,
-          image: categoryObj.image || menuObj.image,
-        }) ||
-        (menuObj && {
-          title: menuObj.title,
-          description: `Explore ${menuObj.title}!`,
-          image: menuObj.image,
-        }) ||
-        null;
+      let finalItemData = null;
+
+if (itemObj) {
+  finalItemData = {
+    title: itemObj.title,
+    description: itemObj.description || `Explore ${itemObj.title}!`,
+    image: itemObj.image || categoryObj?.image || menuObj.image,
+  };
+} else if (categoryObj) {
+  finalItemData = {
+    title: categoryObj.title,
+    description: `Explore ${categoryObj.title}!`,
+    image: categoryObj.image || menuObj.image,
+  };
+} else if (menuObj) {
+  finalItemData = {
+    title: menuObj.title,
+    description: `Explore ${menuObj.title}!`,
+    image: menuObj.image,
+  };
+}
+
 
       setItemData(finalItemData);
     } catch (err) {
