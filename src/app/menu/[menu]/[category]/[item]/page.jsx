@@ -163,12 +163,61 @@ if (itemObj) {
                 <h3 className="text-lg font-semibold text-gray-900 leading-tight">
                   {tour.tourName}
                 </h3>
-                <p className="text-gray-500 text-sm mt-1">
+                {/* <p className="text-gray-500 text-sm mt-1">
                   Code: <span className="font-medium">{tour.tourCode}</span>
-                </p>
+                </p> */}
                 <p className="text-gray-600 text-sm mt-3">
                   {shortText(tour.description)}
                 </p>
+                {/* Tags */}
+{/* Tags */}
+<div className="flex flex-wrap gap-2 mt-3">
+
+  {tour.isHotSelling && (
+    <span className="px-2.5 py-1 text-[11px] font-medium bg-red-100 text-red-700 border border-red-200 rounded-full">
+      Hot Selling
+    </span>
+  )}
+
+  {tour.isQuickEscape && (
+    <span className="px-2.5 py-1 text-[11px] font-medium bg-blue-100 text-blue-700 border border-blue-200 rounded-full">
+      Quick Escape
+    </span>
+  )}
+
+  {tour.isTopDeal && (
+    <span className="px-2.5 py-1 text-[11px] font-medium bg-green-100 text-green-700 border border-green-200 rounded-full">
+      Top Deal
+    </span>
+  )}
+
+  {tour.isInternational && (
+    <span className="px-2.5 py-1 text-[11px] font-medium bg-purple-100 text-purple-700 border border-purple-200 rounded-full">
+      International
+    </span>
+  )}
+
+  {tour.isDomestic && (
+    <span className="px-2.5 py-1 text-[11px] font-medium bg-yellow-100 text-yellow-700 border border-yellow-200 rounded-full">
+      Domestic
+    </span>
+  )}
+
+  {tour.isSeasonalTour && (
+    <span className="px-2.5 py-1 text-[11px] font-medium bg-orange-100 text-orange-700 border border-orange-200 rounded-full">
+      Seasonal
+    </span>
+  )}
+
+  {/* {tour.isNormalTour && (
+    <span className="px-2.5 py-1 text-[11px] font-medium bg-gray-100 text-gray-700 border border-gray-300 rounded-full">
+      Normal Tour
+    </span>
+  )} */}
+
+</div>
+
+
                 <p className="text-gray-700 text-sm mt-3">
                   Destination:{" "}
                   <span className="font-semibold text-indigo-600">
