@@ -55,6 +55,24 @@ const Navbar = () => {
       .replace(/\s+/g, "-") // Replace spaces with hyphens
       .replace(/[^a-z0-9-]/g, ""); // Remove non-alphanumeric/hyphen characters
   };
+  
+  // Use a slight delay to close the dropdown for better UX when moving the mouse
+  const [isHovering, setIsHovering] = useState(false);
+  let closeTimer = null;
+
+  const handleMouseEnter = (menuId) => {
+    clearTimeout(closeTimer);
+    setActiveDropdown(menuId);
+    setIsHovering(true);
+  };
+
+  const handleMouseLeave = () => {
+    closeTimer = setTimeout(() => {
+      setActiveDropdown(null);
+      setIsHovering(false);
+    }, 200); // 200ms delay before closing
+  };
+  // End of delay logic
 
   return (
     <>
@@ -241,90 +259,101 @@ const Navbar = () => {
                     {menus.map((menu) => (
                       <li
                         key={menu.id}
-                        className="relative"
-                        // onClick={() =>
-                        //   router.push(`/${createSlug(menu.title)}`) 
-                        // }
-                        onMouseEnter={() => setActiveDropdown(menu.id)}
-                        onMouseLeave={() => setActiveDropdown(null)}
+                        className="relative group" // Added 'group' for better hover targeting
+                        onMouseEnter={() => handleMouseEnter(menu.id)}
+                        onMouseLeave={handleMouseLeave}
                       >
                         <a
-      className={`cursor-pointer ${
-        // 1. ON HOVER COLOR RED (for the text)
-        'group-hover:text-red-600  hover:text-red-600 ' 
-        // 2. ACTIVE COLOR: Blue text (matches image)
-        + (activeDropdown === menu.id ? 'text-blue-600' : '') 
-      }`}
-    >
-      {menu.title}
-      {/* 3. ICON (UP/DOWN) + COLOR LOGIC */}
-      <span 
-        className={`ml-1 inline-block text-sm transition-transform duration-200 
-          ${
-            activeDropdown === menu.id 
-              ? 'transform rotate-180 text-blue-600' 
-              : 'text-current group-hover:text-red-600'
-          }
-        `}
-      >
-        <i className="fas fa-chevron-down"></i> 
-      </span>
-    </a>
-                        {activeDropdown === menu.id && menu.categories?.length > 0 && (
-                          <div
-                            // MODIFIED: Changed mt-3 to mt-0.5 to bridge the gap between menu item and dropdown for seamless hover (Fixes the 'disappear' issue).
-                            // The dropdown box (bg-white, shadow-2xl) provides the color and border look.
-                            className="absolute right-1 top-full mt-0.5 w-[1000px] bg-white rounded-xl shadow-2xl p-8 z-50 pointer-events-auto transition-opacity duration-300"
+                          className={`cursor-pointer font-medium transition-colors duration-200 
+                            ${activeDropdown === menu.id 
+                              ? 'text-blue-600' 
+                              : 'text-gray-800 hover:text-blue-600'
+                            }
+                          `}
+                        >
+                          {menu.title}
+                          {/* Chevron Icon: Rotate on active/hover, use subtle color when inactive */}
+                          <span 
+                            className={`ml-1 inline-block text-sm transition-transform duration-300 
+                              ${activeDropdown === menu.id 
+                                ? 'transform rotate-180 text-blue-600' 
+                                : 'text-gray-400 group-hover:text-blue-600'
+                              }
+                            `}
                           >
+                            <i className="fas fa-chevron-down"></i> 
+                          </span>
+                        </a>
+                        
+                        {/* -------------------- IMPROVED MEGA-MENU DROPDOWN -------------------- */}
+                        {/* Note: This div is always rendered for smooth transition, hidden with classes */}
+                        <div
+                            className={`absolute right-1 top-full mt-0.5 w-[1000px] bg-white rounded-xl shadow-2xl p-8 z-50 
+                              transition-all duration-300 ease-in-out origin-top-right
+                              ${activeDropdown === menu.id 
+                                  ? 'opacity-100 scale-100 translate-y-0 visible pointer-events-auto' 
+                                  : 'opacity-0 scale-95 -translate-y-1 invisible pointer-events-none'
+                              }`
+                            }
+                        >
                             <div className="flex">
                               {/* LEFT SIDE: Categories and Items - 2 columns, scrollable */}
-                              <div className="flex-grow grid grid-cols-2 gap-x-8 gap-y-6 pr-6 border-r border-gray-200 max-h-[400px] overflow-y-auto custom-scrollbar">
-                                {menu.categories.map((cat) => (
-                                  <div key={cat.id} className="min-w-0">
-                                    <h4
-                                      className="text-blue-600 font-bold mb-3 uppercase hover:text-blue-800 cursor-pointer transition-colors"
-                                      // Category Click Navigation: /menu-title/category-title (e.g., /dubai/domestic)
-                                      onClick={(e) => {
-                                        e.stopPropagation(); // Prevent the parent li's click handler from running
-                                        router.push(
-                                          `/menu/${createSlug(menu.title)}/${createSlug(cat.title)}`
-                                        );
-                                        setActiveDropdown(null); // Close dropdown on click
-                                      }}
-                                    >
-                                      {cat.title}
-                                    </h4>
-                                    <div className="space-y-3">
-                                      {/* Category Items */}
-                                      {cat.items?.map((item) => (
-                                        <div
-                                          key={item.id}
-                                          className="flex items-start gap-3 cursor-pointer p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                                          // Item Click Navigation: /menu-title/category-title/item-title (e.g., /dubai/domestic/ladakh)
-                                          onClick={(e) => {
-                                            e.stopPropagation(); // Prevent the parent li's click handler from running
-                                            router.push(
-                                              `/menu/${createSlug(menu.title)}/${createSlug(cat.title)}/${createSlug(item.id)}`
-                                            );
-                                            setActiveDropdown(null); // Close dropdown on click
-                                          }}
-                                        >
-                                          {/* UI from previous version: Image and description */}
-                                          <img
-                                            src={item.image?.secure_url}
-                                            className="w-12 h-12 rounded-md object-cover flex-shrink-0"
-                                            alt={item.title}
-                                          />
-                                          <div className="min-w-0">
-                                            <p className="font-semibold text-gray-800 truncate">{item.title}</p>
-                                            <p className="text-gray-500 text-xs truncate">{item.description}</p>
-                                          </div>
-                                        </div>
-                                      ))}
-                                    </div>
-                                  </div>
-                                ))}
-                              </div>
+                              <div
+  className="flex-grow flex flex-wrap gap-4 pr-6 border-r border-gray-200 overflow-y-auto custom-scrollbar"
+>
+  {menu.categories?.length > 0 ? (
+    menu.categories.map((cat) => (
+      <div
+        key={cat.id}
+        className="w-[48%]  rounded-lg"
+      >
+        <h4
+          className="text-blue-700 font-bold  uppercase hover:text-blue-900 cursor-pointer transition-colors"
+          onClick={(e) => {
+            e.stopPropagation();
+            router.push(
+              `/menu/${createSlug(menu.title)}/${createSlug(cat.title)}`
+            );
+            setActiveDropdown(null);
+          }}
+        >
+          {cat.title}
+        </h4>
+
+        <div className="space-y-1">
+          {cat.items?.map((item) => (
+            <div
+              key={item.id}
+              className="flex items-center gap-3 bg-white cursor-pointer p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              onClick={(e) => {
+                e.stopPropagation();
+                router.push(
+                  `/menu/${createSlug(menu.title)}/${createSlug(cat.title)}/${createSlug(item.id)}`
+                );
+                setActiveDropdown(null);
+              }}
+            >
+              <img
+                src={item.image?.secure_url}
+                className="w-12 h-12 rounded-md object-cover flex-shrink-0"
+                alt={item.title}
+              />
+
+              <div className="min-w-0">
+                <p className="font-semibold text-gray-900 truncate">
+                  {item.title}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    ))
+  ) : (
+    <div className="text-gray-500">No categories available.</div>
+  )}
+</div>
+
 
                               {/* RIGHT SIDE: Main Menu Image */}
                               <div className="w-[300px] flex-shrink-0 ml-6">
@@ -336,14 +365,10 @@ const Navbar = () => {
                                 />
                               </div>
                             </div>
-                          </div>
-                        )}
+                        </div>
+                        {/* ------------------ END OF IMPROVED MEGA-MENU DROPDOWN ------------------ */}
                       </li>
                     ))}
-
-                    {/* STATIC MENU ITEMS (from previous) */}
-                    {/* <li onClick={() => router.push("/blog")}>Blog</li> */}
-                    <li></li> {/* Empty li from previous */}
                    <li className="current-menu-item" onClick={() => router.push("/")}>
                       <a className="cursor-pointer">Blog</a>
                     </li>
